@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from tg_bot import bot
+
+
+if __name__ == '__main__':
+	bot.infinity_polling()
