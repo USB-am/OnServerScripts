@@ -1,5 +1,5 @@
-import json
 from datetime import datetime
+from dataclasses import dataclass
 
 import requests
 from geopy.geocoders import Nominatim
@@ -34,40 +34,64 @@ def send_request(address: str):
 	)
 	req = requests.get(request)
 
-	return json.loads(req.text)
-
-
-def convert_from_json(data: dict) -> str:
-	answer = 'Подгода в {city}:'.format(
-		city=data['city']['name']
-	)
-	last_day = ''
-
-	for dt in data.get('list'):
-		start_day = datetime.fromtimestamp(dt['dt']).strftime('%d.%m.%Y')
-		start_time = datetime.fromtimestamp(dt['dt']).strftime('%H:%M')
-		temp = dt['main']['temp']
-		humidity = dt['main']['humidity']
-		weather_type = dt['weather'][0]['main']
-		weather_desc = dt['weather'][0]['description']
-
-		if last_day != start_day:
-			answer += f'\n\n{start_day}\n'
-			last_day = start_day
-
-		answer += f'{start_time} - {round(temp, 0)}🌡 {humidity}% {weather_type} {weather_desc}\n'
-
-	return answer
+	return req.json()
 
 
 WEATHER_TYPES = {
-	'sun': '☀️',
-	'partly_cloudy': '🌤️',
-	'clouds': '🌥️',
-	'partly_rain': '🌦️',
-	'rain': '🌧️',
-	'snow': '❄️'
+	'hot': '🔥',
+	'01': '☀️',
+	'02': '🌤',
+	'03': '☁️',
+	'09': '🌧',
+	'10': '🌦',
+	'11': '⛈',
+	'13': '🌨',
+	'50': '🌁'
 }
+
+
+@dataclass
+class WeatherElement:
+	''' Хранилище данных о погоде в определенный период '''
+
+	start: datetime
+	temp: float
+	humidity: int
+	weather_icon: str
+	weather_desc: str
+
+	def __str__(self):
+		return '[{start_time}] {temp}°C🌡  {humidity}%🌀  {weather_type} {weather_description}\n'.format(
+			start_time=self.start.strftime('%H:%M'),
+			temp=f'+{round(self.temp)}' if self.temp >= 0 else round(self.temp),
+			humidity=self.humidity,
+			weather_type=WEATHER_TYPES.get(self.weather_icon, ' '),
+			weather_description=self.weather_desc
+		)
+
+
+def convert_from_json(data: dict) -> str:
+	answer = 'Подгода в {city} на сегодня:\n\n'.format(
+		city=data['city']['name']
+	)
+	now_date = datetime.now().strftime('%d.%m.%Y')
+
+	for dt in data.get('list'):
+		first_day = datetime.fromtimestamp(dt['dt']).strftime('%d.%m.%Y')
+		elem = WeatherElement(
+			start=datetime.fromtimestamp(dt['dt']),
+			temp=dt['main']['temp'],
+			humidity=dt['main']['humidity'],
+			weather_icon=dt['weather'][0]['icon'][:-1],	# [:-1] - delete last sym ('d' or 'n')
+			weather_desc=dt['weather'][0]['description']
+		)
+
+		if now_date != first_day:
+			break
+
+		answer += str(elem)
+
+	return answer
 
 
 def get_weather(city: str) -> str:
