@@ -2,12 +2,15 @@ from datetime import datetime
 from dataclasses import dataclass
 
 import requests
+from requests.exceptions import ConnectionError
 from geopy.geocoders import Nominatim
 from geopy.location import Location
 
 from config import WEATHER_API
 
 
+# DOCUMENTATION:
+# https://openweathermap.org/forecast5
 _REQUEST = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={API_key}&lang=ru'
 
 
@@ -32,16 +35,19 @@ def send_request(address: str):
 		lon=lon,
 		API_key=WEATHER_API
 	)
-	req = requests.get(request)
+	try:
+		data = requests.get(request).json()
+	except ConnectionError:
+		return
 
-	return req.json()
+	return data
 
 
 WEATHER_TYPES = {
-	'hot': '🔥',
 	'01': '☀️',
 	'02': '🌤',
 	'03': '☁️',
+	'04': '🌤',
 	'09': '🌧',
 	'10': '🌦',
 	'11': '⛈',
@@ -71,7 +77,7 @@ class WeatherElement:
 
 
 def convert_from_json(data: dict) -> str:
-	answer = 'Подгода в {city} на сегодня:\n\n'.format(
+	answer = 'Подгода в *{city}* на сегодня:\n\n'.format(
 		city=data['city']['name']
 	)
 	now_date = datetime.now().strftime('%d.%m.%Y')
@@ -96,6 +102,10 @@ def convert_from_json(data: dict) -> str:
 
 def get_weather(city: str) -> str:
 	weather_data = send_request(city)
-	answer = convert_from_json(weather_data)
+
+	if weather_data is None:
+		answer = 'Произошла ошибка получения данных!\nКогда-нибудь все заработает'
+	else:
+		answer = convert_from_json(weather_data)
 
 	return answer
