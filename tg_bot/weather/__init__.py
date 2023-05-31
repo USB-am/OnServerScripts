@@ -24,11 +24,14 @@ def get_location(address: str) -> Location:
 def get_coords(address: str) -> tuple:
 	loc = get_location(address)
 
-	return loc.latitude, loc.longitude
+	return (loc.latitude, loc.longitude)
 
 
 def send_request(address: str):
-	lat, lon = get_coords(address)
+	try:
+		lat, lon = get_coords(address)
+	except AttributeError:
+		return
 
 	request = _REQUEST.format(
 		lat=lat,
@@ -104,7 +107,8 @@ def get_weather(city: str) -> str:
 	weather_data = send_request(city)
 
 	if weather_data is None:
-		answer = 'Произошла ошибка получения данных!\nКогда-нибудь все заработает'
+		answer = 'Произошла ошибка получения данных или неправильно указано '+\
+			'название города!'
 	else:
 		answer = convert_from_json(weather_data)
 
