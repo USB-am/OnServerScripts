@@ -5,6 +5,7 @@ from config import TELEGRAM_TOKEN
 from .data_base import db
 from .data_base import manager as DBManager
 from .weather import get_weather
+from .train_schedules import get_schedules
 
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
@@ -59,6 +60,8 @@ def text_reception(message: types.Message) -> None:
 	if message.text.lower() == 'сменить город':
 		s = bot.reply_to(message, 'Введи название города.\nДля отмены необходимо ввести "Отмена"')
 		bot.register_next_step_handler(s, change_city)
+	elif message.text.lower() == 'расписание':
+		pass
 	else:
 		bot.send_message(message.chat.id, 'Некорректный запрос!')
 
