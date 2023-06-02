@@ -1,8 +1,10 @@
+from typing import List
+
 import telebot
 from telebot import types
 
 from config import TELEGRAM_TOKEN
-from .data_base import db
+from .data_base import db, Station
 from .data_base import manager as DBManager
 from .weather import get_weather
 from .train_schedules import get_schedules
@@ -19,6 +21,8 @@ def start(message: types.Message) -> None:
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	geolocation_button = types.KeyboardButton('Сменить город')
 	markup.add(geolocation_button)
+	schedule_button = types.KeyboardButton('Расписание транспорта')
+	markup.add(schedule_button)
 
 	DBManager.find_else_create_user(message)
 
@@ -60,8 +64,8 @@ def text_reception(message: types.Message) -> None:
 	if message.text.lower() == 'сменить город':
 		s = bot.reply_to(message, 'Введи название города.\nДля отмены необходимо ввести "Отмена"')
 		bot.register_next_step_handler(s, change_city)
-	elif message.text.lower() == 'расписание':
-		pass
+	elif message.text.lower() == 'расписание транспорта':
+		ask_stations(message)
 	else:
 		bot.send_message(message.chat.id, 'Некорректный запрос!')
 
@@ -79,3 +83,26 @@ def change_city(message: types.Message) -> None:
 	DBManager.update(user, 'city', message.text)
 
 	bot.send_message(message.chat.id, f'Город изменен с "{old_city}" на "{message.text}"')
+
+
+def ask_from_station(message: types.Message) -> List[Station]:
+	stations = []
+
+	def find_stations(station_title: types.Message) -> List[Station]:
+		stations = DBManager.find_stations(station_title)
+
+	from_station_title = bot.reply_to(
+		message,
+		'Введи название станции "Откуда".\nДля отмены необходимо ввести "Отмена"'
+	)
+	bot.register_next_step_handler(from_station_title, find_stations)
+
+	return stations
+
+
+def ask_stations(message: types.Message) -> None:
+	from_ = ask_from_station(message)
+	print(bot.send_message(message.chat.id, from_[0].title))
+	# to = ask_to_station(message)
+	# from_ = bot.reply_to(message, 'Введи название станции "Откуда".\nДля отмены необходимо ввести "Отмена"')
+	# bot.register_next_step_handler(from_, )

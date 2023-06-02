@@ -1,8 +1,8 @@
-from typing import Union
+from typing import Union, List
 
 from telebot import types
 
-from . import db, TelegramUser
+from . import db, TelegramUser, Station
 
 
 def find_user(message: types.Message) -> Union[TelegramUser, None]:
@@ -41,3 +41,9 @@ def update(entry: db.Model, arg: str, value: Union[int, float, str]) -> None:
 	setattr(entry, arg, value)
 
 	db.session.commit()
+
+
+def find_stations(message: types.Message) -> List[Station]:
+	stations = Station.query.filter_by(title=message.text).all()
+
+	return stations
