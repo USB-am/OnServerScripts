@@ -89,6 +89,11 @@ def ask_from_station(message: types.Message) -> List[Station]:
 	stations = []
 
 	def find_stations(station_title: types.Message) -> List[Station]:
+		nonlocal stations
+
+		if station_title.text.lower() == 'отмена':
+			return
+
 		stations = DBManager.find_stations(station_title)
 
 	from_station_title = bot.reply_to(
@@ -102,7 +107,8 @@ def ask_from_station(message: types.Message) -> List[Station]:
 
 def ask_stations(message: types.Message) -> None:
 	from_ = ask_from_station(message)
-	print(bot.send_message(message.chat.id, from_[0].title))
+	print(from_)
+	# print(bot.send_message(message.chat.id, from_.title))
 	# to = ask_to_station(message)
 	# from_ = bot.reply_to(message, 'Введи название станции "Откуда".\nДля отмены необходимо ввести "Отмена"')
 	# bot.register_next_step_handler(from_, )
