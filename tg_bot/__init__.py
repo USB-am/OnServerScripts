@@ -86,6 +86,12 @@ def change_city(message: types.Message) -> None:
 
 
 def ask_from_station(message: types.Message) -> List[Station]:
+	'''
+	Переписать.
+	Нужно сначала отправлять сообщение, а потом, на основе НОВОГО, получат название.
+	В идеале запрашивать страну, регион, населенный пункт и выдавать список доступных станций
+	'''
+
 	stations = []
 
 	def find_stations(station_title: types.Message) -> List[Station]:
@@ -107,8 +113,3 @@ def ask_from_station(message: types.Message) -> List[Station]:
 
 def ask_stations(message: types.Message) -> None:
 	from_ = ask_from_station(message)
-	print(from_)
-	# print(bot.send_message(message.chat.id, from_.title))
-	# to = ask_to_station(message)
-	# from_ = bot.reply_to(message, 'Введи название станции "Откуда".\nДля отмены необходимо ввести "Отмена"')
-	# bot.register_next_step_handler(from_, )
