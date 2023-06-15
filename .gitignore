@@ -1,3 +1,5 @@
 .venv/
 **/__pycache__
 *.db
+
+!tg_bot/data_base/tg_bot.db
