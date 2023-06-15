@@ -40,7 +40,7 @@ def start() -> None:
 						region=region_title,
 						country=country_title
 					)
-					print(station)
+					# print(station)
 
 					db.session.add(station)
 					db.session.commit()
