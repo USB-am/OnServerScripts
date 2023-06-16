@@ -85,31 +85,17 @@ def change_city(message: types.Message) -> None:
 	bot.send_message(message.chat.id, f'Город изменен с "{old_city}" на "{message.text}"')
 
 
-def ask_from_station(message: types.Message) -> List[Station]:
-	'''
-	Переписать.
-	Нужно сначала отправлять сообщение, а потом, на основе НОВОГО, получат название.
-	В идеале запрашивать страну, регион, населенный пункт и выдавать список доступных станций
-	'''
-
-	stations = []
-
-	def find_stations(station_title: types.Message) -> List[Station]:
-		nonlocal stations
-
-		if station_title.text.lower() == 'отмена':
-			return
-
-		stations = DBManager.find_stations(station_title)
-
-	from_station_title = bot.reply_to(
-		message,
-		'Введи название станции "Откуда".\nДля отмены необходимо ввести "Отмена"'
-	)
-	bot.register_next_step_handler(from_station_title, find_stations)
-
-	return stations
+def pprint(*a):
+	print(*a)
 
 
 def ask_stations(message: types.Message) -> None:
-	from_ = ask_from_station(message)
+	markup = types.InlineKeyboardMarkup()
+
+	unique_country_stations = Station.query.distinct(Station.country)\
+		.group_by(Station.country).all()
+	countries = [station.country for station in unique_country_stations]
+	for country in countries:
+		markup.add(types.InlineKeyboardButton(country, callback_data='country'))
+
+	bot.send_message(message.chat.id, 'Выбери страну:', reply_markup=markup)
