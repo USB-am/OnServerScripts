@@ -85,10 +85,6 @@ def change_city(message: types.Message) -> None:
 	bot.send_message(message.chat.id, f'Город изменен с "{old_city}" на "{message.text}"')
 
 
-def pprint(*a):
-	print(*a)
-
-
 def ask_stations(message: types.Message) -> None:
 	markup = types.InlineKeyboardMarkup()
 
