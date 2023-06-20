@@ -22,5 +22,21 @@ class TestRequest(unittest.TestCase):
 		self.assertTrue(is_error)
 
 
+class TestScheduleFinder(unittest.TestCase):
+	''' Тестирование получения расписания '''
+
+	@classmethod
+	def setUpClass(cls):
+		from_station = Station.query.filter_by(title='1337 км').first()
+		to_station = Station.query.filter_by(title='Ростов-Главный').first()
+
+		cls.output = ya_api._send_request(from_station, to_station)
+
+	def test_schedule_times(self):
+		o = ya_api._get_schedule_json_times(self.output)
+
+		self.assertEqual(o, None)
+
+
 if __name__ == '__main__':
 	unittest.main()
