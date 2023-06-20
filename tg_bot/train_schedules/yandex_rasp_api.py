@@ -28,3 +28,29 @@ def _send_request(from_station: Station, to_station: Station, offset: int=0) -> 
 	output = requests.get(req).json()
 
 	return output
+
+
+def __rfc3339_to_datetime(rfc3339: str) -> datetime:
+	return datetime.fromisoformat(rfc3339)
+
+
+def _get_schedule_json_times(yandex_api_json: dict) -> list:
+	segments = yandex_api_json.get('segments', [])
+
+	for segment in segments:
+		departure_str = segment.get('departure', '')
+		departure_datetime = __rfc3339_to_datetime(departure_str)
+
+		arrival_str = segment.get('arrival', '')
+		arrival_datetime = __rfc3339_to_datetime(arrival_str)
+
+		print(departure_datetime.time(), arrival_datetime.time(), sep=' -> ')
+	# print(dir(departure_datetime))
+	# file = open('yandex_api_json.json', mode='w')
+	# json.dump(yandex_api_json, file, indent=1, ensure_ascii=True)
+	# file.close()
+
+
+def get_schedules(from_station: Station, to_station: Station) -> list:
+	schedule_json = _send_request(from_station, to_station)
+	times = _get_schedule_json_times(schedule_json)

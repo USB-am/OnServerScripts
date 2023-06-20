@@ -7,7 +7,7 @@ from config import TELEGRAM_TOKEN
 from .data_base import db, Station
 from .data_base import manager as DBManager
 from .weather import get_weather
-from .train_schedules import get_schedules
+# from .train_schedules import get_schedules
 
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
