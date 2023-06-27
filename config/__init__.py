@@ -11,3 +11,7 @@ import os
 BASE_DIR = os.getcwd()
 
 LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+
+
+# CONSTANTS
+MAILING_TIME = '23:55'
