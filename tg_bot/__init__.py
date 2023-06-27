@@ -21,8 +21,8 @@ def start(message: types.Message) -> None:
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	geolocation_button = types.KeyboardButton('Сменить город')
 	markup.add(geolocation_button)
-	schedule_button = types.KeyboardButton('Расписание транспорта')
-	markup.add(schedule_button)
+	# schedule_button = types.KeyboardButton('Расписание транспорта')
+	# markup.add(schedule_button)
 
 	DBManager.find_else_create_user(message)
 
