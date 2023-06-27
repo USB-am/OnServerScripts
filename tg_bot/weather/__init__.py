@@ -79,11 +79,11 @@ class WeatherElement:
 		)
 
 
-def convert_from_json(data: dict) -> str:
+def convert_from_json(data: dict, date: datetime) -> str:
 	answer = 'Подгода в *{city}* на сегодня:\n\n'.format(
 		city=data['city']['name']
 	)
-	now_date = datetime.now().strftime('%d.%m.%Y')
+	date = date.strftime('%d.%m.%Y')
 
 	for dt in data.get('list'):
 		first_day = datetime.fromtimestamp(dt['dt']).strftime('%d.%m.%Y')
@@ -95,21 +95,25 @@ def convert_from_json(data: dict) -> str:
 			weather_desc=dt['weather'][0]['description']
 		)
 
-		if now_date != first_day:
-			break
+		# print(f'Date: {date};\tFirst day: {first_day}')
+		if date != first_day:
+			continue
 
 		answer += str(elem)
 
 	return answer
 
 
-def get_weather(city: str) -> str:
+def get_weather(city: str, date: datetime=None) -> str:
+	if date is None:
+		date = datetime.now()
+
 	weather_data = send_request(city)
 
 	if weather_data is None:
 		answer = 'Произошла ошибка получения данных или неправильно указано '+\
 			'название города!'
 	else:
-		answer = convert_from_json(weather_data)
+		answer = convert_from_json(weather_data, date)
 
 	return answer

@@ -1,10 +1,14 @@
+import schedule
+import time
 from typing import List
+from datetime import datetime, timedelta
+from multiprocessing import *
 
 import telebot
 from telebot import types
 
-from config import TELEGRAM_TOKEN
-from .data_base import db, Station
+from config import TELEGRAM_TOKEN, MAILING_TIME
+from .data_base import db, Station, TelegramUser
 from .data_base import manager as DBManager
 from .weather import get_weather
 # from .train_schedules import get_schedules
@@ -95,3 +99,22 @@ def ask_stations(message: types.Message) -> None:
 		markup.add(types.InlineKeyboardButton(country, callback_data='country'))
 
 	bot.send_message(message.chat.id, 'Выбери страну:', reply_markup=markup)
+
+
+def start_timer() -> None:
+	p1 = Process(target=start_schedule, args=()).start()
+
+
+def start_schedule() -> None:
+	schedule.every().day.at(MAILING_TIME).do(weather_mailing)
+
+	while True:
+		schedule.run_pending()
+		time.sleep(1)
+
+
+def weather_mailing() -> None:
+	for user in TelegramUser.query.all():
+		tomorrow_date = datetime.now().date() + timedelta(days=1)
+		weather_message_text = get_weather(user.city, tomorrow_date)
+		bot.send_message(user.chat_id, weather_message_text, parse_mode='Markdown')

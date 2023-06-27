@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from logger import logging
-from tg_bot import bot
+from tg_bot import bot, start_timer
 
 
 @logging
 def main():
+	start_timer()
 	bot.infinity_polling()
 
 
