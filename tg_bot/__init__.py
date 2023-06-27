@@ -27,6 +27,9 @@ def start(message: types.Message) -> None:
 	markup.add(geolocation_button)
 	# schedule_button = types.KeyboardButton('Расписание транспорта')
 	# markup.add(schedule_button)
+	# print(dir(message.chat))
+	# print(message.chat.first_name)
+	# print(message.chat.last_name)
 
 	DBManager.find_else_create_user(message)
 

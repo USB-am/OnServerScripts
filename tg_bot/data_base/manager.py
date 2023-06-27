@@ -16,6 +16,10 @@ def find_user(message: types.Message) -> Union[TelegramUser, None]:
 def create_user(message: types.Message) -> TelegramUser:
 	''' Создание пользователя по message.chat.id '''
 
+	username = message.chat.username
+	if username is None:
+		username = 'путник'
+
 	user = TelegramUser(
 		chat_id=message.chat.id,
 		name=message.chat.username,
