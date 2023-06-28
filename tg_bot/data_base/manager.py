@@ -17,21 +17,29 @@ def find_user(message: types.Message) -> Union[TelegramUser, None]:
 def create_user(message: types.Message) -> TelegramUser:
 	''' Создание пользователя по message.chat.id '''
 
+	username = message.chat.username
+	if username is None:
+		username = 'Путник'
+
 	try:
 		user = TelegramUser(
 			chat_id=message.chat.id,
-			name=message.chat.username,
+			name=username,
 			city='Москва'
 		)
+		db.session.add(user)
+		db.session.commit()
 	except IntegrityError:
+		db.session.rollback()
+
 		user = TelegramUser(
 			chat_id=message.chat.id,
 			name='Путник',
 			city='Москва'
 		)
 
-	db.session.add(user)
-	db.session.commit()
+		db.session.add(user)
+		db.session.commit()
 
 	return user
 
