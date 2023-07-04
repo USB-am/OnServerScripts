@@ -14,4 +14,4 @@ LOGS_DIR = os.path.join(BASE_DIR, 'logs')
 
 
 # CONSTANTS
-MAILING_TIME = '23:55'
+MAILING_TIME = '20:55'	# 23:55 по МСК

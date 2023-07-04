@@ -105,7 +105,7 @@ def ask_stations(message: types.Message) -> None:
 
 
 def start_timer() -> None:
-	p1 = Process(target=start_schedule, args=()).start()
+	schedule_process.start()
 
 
 def start_schedule() -> None:
@@ -121,3 +121,6 @@ def weather_mailing() -> None:
 		tomorrow_date = datetime.now().date() + timedelta(days=1)
 		weather_message_text = get_weather(user.city, tomorrow_date)
 		bot.send_message(user.chat_id, weather_message_text, parse_mode='Markdown')
+
+
+schedule_process = Process(target=start_schedule, args=())
