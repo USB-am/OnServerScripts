@@ -146,7 +146,7 @@ def start_schedule() -> None:
 		)
 
 	# Tomorrow mailing
-	schedule.every().day.at(mailing_time).do(
+	schedule.every().day.at(MAILING_TIMES[-1]).do(
 		weather_mailing, date=datetime.now().date() + timedelta(days=1)
 	)
 
