@@ -23,13 +23,11 @@ def start(message: types.Message) -> None:
 	''' Обработка команды /start '''
 
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-	geolocation_button = types.KeyboardButton('Сменить город')
-	markup.add(geolocation_button)
-	# schedule_button = types.KeyboardButton('Расписание транспорта')
-	# markup.add(schedule_button)
-	# print(dir(message.chat))
-	# print(message.chat.first_name)
-	# print(message.chat.last_name)
+	markup.add(types.KeyboardButton('Сменить город'),)
+	markup.add(
+		types.InlineKeyboardButton('Станция отправления', callback_data='from_'),
+		types.InlineKeyboardButton('Станция прибытия', callback_data='to')
+	)
 
 	DBManager.find_else_create_user(message)
 
@@ -71,8 +69,14 @@ def text_reception(message: types.Message) -> None:
 	if message.text.lower() == 'сменить город':
 		s = bot.reply_to(message, 'Введи название города.\nДля отмены необходимо ввести "Отмена"')
 		bot.register_next_step_handler(s, change_city)
-	elif message.text.lower() == 'расписание транспорта':
-		ask_stations(message)
+	elif message.text.lower() == 'станция отправления':
+		# ask_station(type_='from')
+		s = bot.send_message(message.chat.id, 'Введи название станции:')
+		bot.register_next_step_handler(s, select_station)
+	elif message.text.lower() == 'станция прибытия':
+		# ask_station(type_='to')
+		s = bot.send_message(message.chat.id, 'Введи название станции:')
+		bot.register_next_step_handler(s, select_station)
 	else:
 		bot.send_message(message.chat.id, 'Некорректный запрос!')
 
@@ -104,23 +108,57 @@ def ask_stations(message: types.Message) -> None:
 	bot.send_message(message.chat.id, 'Выбери страну:', reply_markup=markup)
 
 
+def ask_station(type_: str) -> None:
+	s = bot.send_message(message.chat.id, 'Введи название станции:')
+	bot.register_next_step_handler(s, select_station)
+
+
+def select_station(message: types.Message) -> None:
+	found_stations = Station.query.filter_by(title=message.text)
+
+	'''
+	markup = types.InlineKeyboardMarkup()
+	buttons = [
+		types.KeyboardButton(station.title)
+		for station in found_stations
+	]
+	markup.add(*buttons)
+	'''
+
+	markup = types.InlineKeyboardMarkup(row_width=1)
+	buttons = [
+		types.InlineKeyboardButton(text=station.title)
+	]
+	markup.add(*buttons)
+
+	bot.send_message(message.chat.id, 'Найденные станции:', reply_markup=markup)
+
+
 def start_timer() -> None:
 	schedule_process.start()
 
 
 def start_schedule() -> None:
-	for mailing_time in MAILING_TIMES:
-		schedule.every().day.at(mailing_time).do(weather_mailing)
+	# Today mailing
+	for mailing_time in MAILING_TIMES[:-1]:
+		schedule.every().day.at(mailing_time).do(
+			weather_mailing, date=datetime.now().date()
+		)
+
+	# Tomorrow mailing
+	schedule.every().day.at(mailing_time).do(
+		weather_mailing, date=datetime.now().date() + timedelta(days=1)
+	)
 
 	while True:
 		schedule.run_pending()
 		time.sleep(1)
 
 
-def weather_mailing() -> None:
+def weather_mailing(date: datetime.date) -> None:
 	for user in TelegramUser.query.all():
-		tomorrow_date = datetime.now().date() + timedelta(days=1)
-		weather_message_text = get_weather(user.city, tomorrow_date)
+		# date = datetime.now().date() + timedelta(days=1)
+		weather_message_text = get_weather(user.city, date)
 		bot.send_message(user.chat_id, weather_message_text, parse_mode='Markdown')
 
 

@@ -6,6 +6,9 @@ from tg_bot.data_base import Station
 from config import SCHEDULES_API
 
 
+# Documentation:
+# https://yandex.ru/dev/rasp/doc/reference/schedule-point-point.html
+
 REQUEST = 'https://api.rasp.yandex.net/v3.0/search/?' + \
 	'apikey={API_KEY}&' + \
 	'from={from_}&' + \
