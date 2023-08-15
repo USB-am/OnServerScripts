@@ -7,7 +7,7 @@ from multiprocessing import *
 import telebot
 from telebot import types
 
-from config import TELEGRAM_TOKEN, MAILING_TIME
+from config import TELEGRAM_TOKEN, MAILING_TIMES
 from .data_base import db, Station, TelegramUser
 from .data_base import manager as DBManager
 from .weather import get_weather
@@ -109,7 +109,8 @@ def start_timer() -> None:
 
 
 def start_schedule() -> None:
-	schedule.every().day.at(MAILING_TIME).do(weather_mailing)
+	for mailing_time in MAILING_TIMES:
+		schedule.every().day.at(mailing_time).do(weather_mailing)
 
 	while True:
 		schedule.run_pending()
