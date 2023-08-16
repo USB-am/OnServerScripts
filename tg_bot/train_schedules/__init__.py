@@ -5,6 +5,25 @@ from tg_bot.data_base import Station
 from .yandex_rasp_api import _send_request
 
 
+# plane, train, bus, water, helicopter, sea
+TRANSPORT_EMOJIES = {
+	'plane': '✈',
+	'train': '🚃',
+	'bus': '🚌',
+	'water': '⛵',
+	'helicopter': '🚁',
+	'sea': '🛳',
+}
+TYPES_EMOJIES = {
+	'airport': '🛬',
+	'train_station': '🛤',
+	'bus_station': '🚏',
+	'bus_stop': '🚏',
+	'station': '🏢',
+	'platform': '🚉',
+}
+
+
 def find_station(title: str) -> Union[Station, StationNotFound]:
 	station = Station.query.filter_by(title=title).first()
 
