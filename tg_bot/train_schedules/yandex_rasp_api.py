@@ -16,7 +16,8 @@ REQUEST = 'https://api.rasp.yandex.net/v3.0/search/?' + \
 	'lang=ru_RU&' + \
 	'date={date}&' + \
 	'offset={offset}&' + \
-	'limit=100'
+	'limit=100&' + \
+	'transfers=true'
 
 
 def _send_request(from_station: Station, to_station: Station, offset: int=0) -> dict:
@@ -55,5 +56,5 @@ def _get_schedule_json_times(yandex_api_json: dict) -> list:
 
 
 def get_schedules(from_station: Station, to_station: Station) -> list:
-	schedule_json = _send_request(from_station, to_station)
-	times = _get_schedule_json_times(schedule_json)
+	request_output = _send_request(from_station, to_station)
+	times = _get_schedule_json_times(request_output)

@@ -32,8 +32,8 @@ def start(message: types.Message) -> None:
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	markup.add(types.KeyboardButton('Сменить город'),)
 	markup.add(
-		types.InlineKeyboardButton(StationStatus.from_.title(), callback_data=StationStatus.from_),
-		types.InlineKeyboardButton(StationStatus.to.title(), callback_data=StationStatus.to)
+		types.InlineKeyboardButton(StationStatus.from_.value.capitalize()),#, callback_data=StationStatus.from_),
+		types.InlineKeyboardButton(StationStatus.to.value.capitalize()),#, callback_data=StationStatus.to)
 	)
 
 	DBManager.find_else_create_user(message)
