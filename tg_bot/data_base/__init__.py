@@ -40,4 +40,4 @@ class Station(db.Model):
 		return f'<{self.type.title()}Station "{self.title}" ({self.transport})>'
 
 
-db.create_all()
+# db.create_all()

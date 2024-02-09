@@ -1,28 +1,14 @@
-from logger import logging
-from tg_bot import bot, start_timer#, stop_timer
+from tg_bot import start_bot, stop_bot
+from tg_bot.data_base import db
 
 
-def start():
-	start_timer()
-	bot.infinity_polling()
-
-
-def stop():
-	# stop_timer()
-	bot.stop_polling()
-
-
-# @logging
-def main():
-	while True:
-		try:
-			start()
-		except KeyboardInterrupt:
-			stop()
-			break
-		except Exception as error:
-			print(f'[{error.__class__.__name__}] {" ".join(error.args)}')
-			stop()
+def main() -> None:
+	db.create_all()
+	try:
+		start_bot()
+	except Exception as error:
+		print(error)
+		stop_bot()
 
 
 if __name__ == '__main__':
