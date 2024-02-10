@@ -1,7 +1,10 @@
+import logging
+
 from telebot import types
 
 from config import TELEGRAM_TOKEN
 from .bot import Bot
+from .data_base.manager import find_else_create_user
 
 _bot = Bot(TELEGRAM_TOKEN)
 
@@ -17,24 +20,30 @@ BUTTONS_TEXT = {
 def start_bot() -> None:
 	''' Запустить бота '''
 
-	print('Telegram bot is started!')
+	logging.info('Telegram bot is started!')
 	_bot.polling(none_stop=True, interval=0)
 
 
 def stop_bot() -> None:
 	''' Остановить бота '''
 	_bot.stop_bot()
-	print('Telegram bot is closed!')
+	logging.warning('Telegram bot is stoped!')
 
 
 @_bot.message_handler(commands=['start'])
-def start(message) -> None:
+def start(message: types.Message) -> None:
 	''' Обработка команды /start '''
 
+	# Создание кнопок чата
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	change_city_btn = types.KeyboardButton(BUTTONS_TEXT['change_city'])
 	markup.add(change_city_btn)
-	_bot.send_message(message.from_user.id, 'Ну, привет!', reply_markup=markup)
+
+	# Создание пользователя, если его не было
+	user = find_else_create_user(message)
+
+	# Вернуть сообщение с приветствием
+	_bot.send_message(message.from_user.id, f'Ну привет, {user.name}!', reply_markup=markup)
 
 
 @_bot.message_handler(content_types=['text'])

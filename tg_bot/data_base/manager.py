@@ -1,3 +1,4 @@
+import logging
 from typing import Union, List
 
 from telebot import types
@@ -9,6 +10,7 @@ from . import db, TelegramUser, Station
 def find_user(message: types.Message) -> Union[TelegramUser, None]:
 	''' Поиск пользователя по message.chat.id '''
 
+	logging.debug(f'[{message.chat.id}] find_user({message.text})')
 	user = TelegramUser.query.filter_by(chat_id=message.chat.id).first()
 
 	return user
@@ -16,6 +18,8 @@ def find_user(message: types.Message) -> Union[TelegramUser, None]:
 
 def create_user(message: types.Message) -> TelegramUser:
 	''' Создание пользователя по message.chat.id '''
+
+	logging.debug('create_user function is started')
 
 	username = message.chat.username
 	if username is None:
@@ -41,11 +45,15 @@ def create_user(message: types.Message) -> TelegramUser:
 		db.session.add(user)
 		db.session.commit()
 
+	logging.info(f'Created new user [{user.chat_id}] {user.name}')
+
 	return user
 
 
 def find_else_create_user(message: types.Message) -> TelegramUser:
 	''' Поиск пользователя. Если не нашелся - создается '''
+
+	logging.debug('find_else_create_user function is started')
 
 	user = find_user(message)
 	if user is None:
@@ -55,12 +63,20 @@ def find_else_create_user(message: types.Message) -> TelegramUser:
 
 
 def update(entry: db.Model, arg: str, value: Union[int, float, str]) -> None:
+	''' Обновить запись в БД '''
+
+	logging.debug('update function is started')
+
 	setattr(entry, arg, value)
 
 	db.session.commit()
 
 
 def find_stations(message: types.Message) -> List[Station]:
+	''' Поиск станции '''
+
+	logging.debug('find_stations function is started')
+
 	stations = Station.query.filter_by(title=message.text).all()
 
 	return stations

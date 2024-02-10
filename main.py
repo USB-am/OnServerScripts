@@ -1,13 +1,17 @@
+import logging
+
 from tg_bot import start_bot, stop_bot
-from tg_bot.data_base import db
+
+
+# Set logging level
+logging.basicConfig(level=logging.INFO)
 
 
 def main() -> None:
-	db.create_all()
 	try:
 		start_bot()
 	except Exception as error:
-		print(error)
+		logging.critical(error)
 		stop_bot()
 
 
