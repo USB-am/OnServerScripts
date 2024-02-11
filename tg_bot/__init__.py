@@ -4,7 +4,7 @@ from telebot import types
 
 from config import TELEGRAM_TOKEN
 from .bot import Bot
-from .data_base.manager import find_else_create_user
+from .data_base.manager import find_user, find_else_create_user
 
 _bot = Bot(TELEGRAM_TOKEN)
 
@@ -66,10 +66,13 @@ def get_text_messages(message) -> None:
 	msg = message.text.lower().strip()
 
 	if msg == BUTTONS_TEXT['show_weather'].lower():
+		weather_text = Weather.get_weather(message)
 		_bot.send_message(
 			message.from_user.id,
-			Weather.get_weather(message)
+			weather_text,
+			parse_mode='Markdown'
 		)
+		logging.info(f'Send {find_user(message)} current weather.')
 
 	elif msg == BUTTONS_TEXT['change_city'].lower():
 		session = _bot.reply_to(message,

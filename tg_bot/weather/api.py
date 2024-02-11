@@ -1,4 +1,5 @@
 import logging
+import enum
 from typing import Optional, List
 from datetime import datetime
 from dataclasses import dataclass
@@ -15,7 +16,7 @@ from config import WEATHER_API
 # https://openweathermap.org/forecast5
 _REQUEST = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={API_key}&lang=ru'
 # Шаблон вывода погоды на определенный период времени
-WEATHER_CHAT_OUTPUT = '[{start_time}] {temp}°C🌡  {humidity}%🌀  {weather_type} {weather_description}\n'
+WEATHER_CHAT_OUTPUT = '[{start_time}] {temp}°C🌡  {humidity}%🌀  {weather_type} {weather_description}'
 # weather_code: emoji
 WEATHER_TYPES = {
 	'01': '☀️',
@@ -70,6 +71,12 @@ def send_request(address: str) -> Optional[list]:
 	return data
 
 
+class StatusCode(enum.Enum):
+	''' Статусы ответа API '''
+
+	ok = '200'
+
+
 @dataclass
 class WeatherElement:
 	''' Хранилище данных о погоде в определенный период времени '''
@@ -91,7 +98,36 @@ class WeatherElement:
 
 
 def parse_weather(city: str) -> List[WeatherElement]:
-	''' Обращается к API openweathermap и возвращает погоду на сегодня '''
+	''' Обращается к API openweathermap и возвращает погоду '''
 
 	response = send_request(city)
-	print(response)
+	if response['cod'] != StatusCode.ok.value:
+		return []
+
+	result = []
+	for timestamp in response.get('list', []):
+		try:
+			# Время
+			start = datetime.fromtimestamp(timestamp['dt'])
+			# Температура
+			temp = timestamp['main']['temp']
+			# Влажность
+			humidity = timestamp['main']['humidity']
+			# Иконка
+			weather_icon = timestamp['weather'][0]['icon'][:-1]	# Delete last symbol ('d' or 'n')
+			# Описание
+			weather_desc = timestamp['weather'][0]['description']
+		except Exception as parse_error:
+			logging.warning(f'Error when trying to parse weather!\n' +
+			                 '{parse_error}')
+			continue
+
+		result.append(WeatherElement(
+			start=start,
+			temp=temp,
+			humidity=humidity,
+			weather_icon=weather_icon,
+			weather_desc=weather_desc
+		))
+
+	return result

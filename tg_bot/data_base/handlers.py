@@ -13,9 +13,17 @@ def change_city(message: types.Message) -> None:
 
 	logging.debug('change_city is started')
 
+	if message.text.lower() == 'отмена':
+		__BOT.send_message(message.chat.id, 'Отмена смены города.')
+		return
+
 	user = find_else_create_user(message)
 	old_city = user.city
 
 	update(user, 'city', message.text)
 
-	__BOT.send_message(message.chat.id, f'Город изменен с {old_city} на {message.text}')
+	__BOT.send_message(
+		message.chat.id,
+		f'Город изменен с {old_city} на {message.text}'
+	)
+	logging.info(f'{user} changed city from \'{old_city}\' to \'{message.text}\'')

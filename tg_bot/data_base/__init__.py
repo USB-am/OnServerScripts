@@ -19,7 +19,7 @@ class TelegramUser(db.Model):
 	city = db.Column(db.String(255), default='Москва', nullable=True)
 
 	def __str__(self):
-		return f'<TelegramUser \'{self.name}\'>'
+		return f'[{self.chat_id}] {self.name}'
 
 
 class Station(db.Model):
