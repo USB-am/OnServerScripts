@@ -8,12 +8,15 @@ from .data_base.manager import find_else_create_user
 
 _bot = Bot(TELEGRAM_TOKEN)
 
-from .weather import start
+from .weather import handlers as Weather
 from .data_base import handlers as DBHandlers
 
 
 BUTTONS_TEXT = {
-	'change_city': 'Сменить город',
+	'change_city': '🚂 Сменить город',
+	'show_weather': '☔️ Показать погоду',
+	'from_station': '👉 Станция\nотправления',
+	'to_station': '👈 Станция\nприбытия',
 }
 
 
@@ -34,16 +37,26 @@ def stop_bot() -> None:
 def start(message: types.Message) -> None:
 	''' Обработка команды /start '''
 
-	# Создание кнопок чата
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
+	# Создание кнопок чата
+	show_weather_btn = types.KeyboardButton(BUTTONS_TEXT['show_weather'])
 	change_city_btn = types.KeyboardButton(BUTTONS_TEXT['change_city'])
+	from_station_btn = types.KeyboardButton(BUTTONS_TEXT['from_station'])
+	to_station_btn = types.KeyboardButton(BUTTONS_TEXT['to_station'])
+
+	markup.add(show_weather_btn)
 	markup.add(change_city_btn)
+	markup.add(from_station_btn, to_station_btn)
 
 	# Создание пользователя, если его не было
 	user = find_else_create_user(message)
 
 	# Вернуть сообщение с приветствием
-	_bot.send_message(message.from_user.id, f'Ну привет, {user.name}!', reply_markup=markup)
+	_bot.send_message(
+		message.from_user.id,
+		f'Ну привет, {user.name}!', reply_markup=markup
+	)
 
 
 @_bot.message_handler(content_types=['text'])
@@ -52,8 +65,20 @@ def get_text_messages(message) -> None:
 
 	msg = message.text.lower().strip()
 
-	if msg == BUTTONS_TEXT['change_city'].lower():
-		session = _bot.reply_to(
-			message,
-			'Введи название города.\nДля отмены необходимо ввести "Отмена"')
+	if msg == BUTTONS_TEXT['show_weather'].lower():
+		_bot.send_message(
+			message.from_user.id,
+			Weather.get_weather(message)
+		)
+
+	elif msg == BUTTONS_TEXT['change_city'].lower():
+		session = _bot.reply_to(message,
+			'Введи название города.\nДля отмены необходимо ввести "Отмена"'
+		)
 		_bot.register_next_step_handler(session, DBHandlers.change_city)
+
+	else:
+		_bot.send_message(
+			message.from_user.id,
+			'Неизвестный запрос.\nВведи что-нибудь нормальное да!'
+		)
