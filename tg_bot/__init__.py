@@ -88,6 +88,12 @@ def get_text_messages(message) -> None:
 		)
 		_bot.register_next_step_handler(session, DBHandlers.change_city)
 
+	elif msg == BUTTONS_TEXT['from_station'].lower():
+		_bot.send_message(message.from_user.id, 'Пока что это не работает 😊')
+
+	elif msg == BUTTONS_TEXT['to_station'].lower():
+		_bot.send_message(message.from_user.id, 'Пока что это не работает 😊')
+
 	else:
 		_bot.send_message(
 			message.from_user.id,

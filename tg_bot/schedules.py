@@ -20,7 +20,6 @@ def __mailing_weather(date: datetime.date) -> None:
 	users = TelegramUser.query.all()
 	for user in users:
 		weather_text = Weather.get_weather_by_city(user.city, date)
-		print(user.chat_id)
 		__BOT.send_message(user.chat_id, weather_text, parse_mode='Markdown')
 
 		logging.info(f'Send {user} schedule weather.')
@@ -56,7 +55,6 @@ def start_schedule() -> None:
 def start_timer() -> None:
 	''' Запустить счетчик событий '''
 
-	print(datetime.datetime.now().strftime('%d.%m.%Y %H:%M'))
 	schedule_process.start()
 
 
