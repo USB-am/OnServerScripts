@@ -67,12 +67,20 @@ def get_text_messages(message) -> None:
 
 	if msg == BUTTONS_TEXT['show_weather'].lower():
 		weather_text = Weather.get_weather(message)
-		_bot.send_message(
-			message.from_user.id,
-			weather_text,
-			parse_mode='Markdown'
-		)
-		logging.info(f'Send {find_user(message)} current weather.')
+
+		if weather_text is None:
+			_bot.send_message(
+				message.from_user.id,
+				'Произошла ошибка при попытке запроса погоды.\nПопробуй позже 😄'
+			)
+			logging.warning('Weather parser encountered an error.')
+		else:
+			_bot.send_message(
+				message.from_user.id,
+				weather_text,
+				parse_mode='Markdown'
+			)
+			logging.info(f'Send {find_user(message)} current weather.')
 
 	elif msg == BUTTONS_TEXT['change_city'].lower():
 		session = _bot.reply_to(message,

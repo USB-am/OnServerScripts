@@ -15,6 +15,12 @@ from config import WEATHER_API
 # DOCUMENTATION:
 # https://openweathermap.org/forecast5
 _REQUEST = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={API_key}&lang=ru'
+# Request headers
+_HEADERS = {
+	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.5.715 Yowser/2.5 Safari/537.36',
+	'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+	'accept-language': 'ru,en;q=0.9',
+}
 # Шаблон вывода погоды на определенный период времени
 WEATHER_CHAT_OUTPUT = '[{start_time}] {temp}°C🌡  {humidity}%🌀  {weather_type} {weather_description}'
 # weather_code: emoji
@@ -55,7 +61,7 @@ def send_request(address: str) -> Optional[list]:
 		lat, lon = get_coords(address)
 	except AttributeError:
 		logging.warning(f'The address "{address}" coordinates cannot be determined')
-		return
+		return {'cod': 500}
 
 	request = _REQUEST.format(
 		lat=lat,
@@ -63,10 +69,10 @@ def send_request(address: str) -> Optional[list]:
 		API_key=WEATHER_API
 	)
 	try:
-		data = requests.get(request).json()
+		data = requests.get(request, headers=_HEADERS).json()
 	except ConnectionError:
 		logging.warning(f'The API request was not completed')
-		return
+		return {'cod': 500}
 
 	return data
 
