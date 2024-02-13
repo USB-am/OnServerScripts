@@ -9,6 +9,7 @@ from .data_base.manager import find_user, find_else_create_user
 _bot = Bot(TELEGRAM_TOKEN)
 
 from .weather import handlers as Weather
+from .routes import api as RoutesAPI
 from .data_base import handlers as DBHandlers
 
 
