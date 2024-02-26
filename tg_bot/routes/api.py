@@ -1,4 +1,5 @@
 import datetime
+from typing import Dict
 
 import requests
 
@@ -30,7 +31,26 @@ def __rfc3339_to_datetime(rfc3339: str) -> datetime.datetime:
 	return datetime.fromisoformat(rfc3339)
 
 
-def parse_all_stations() -> dict:
+def get_schedule(from_: Station, to: Station, date_: datetime.date,
+                 offset: int=0) -> Dict:
+	''' Получить расписания между Станциями '''
+
+	from_code = from_.yandex_code
+	to_code = to.yandex_code
+
+	url = _REQUEST.format(
+		API_KEY=SCHEDULES_API,
+		from_=from_code,
+		to=to_code,
+		date=date_.strftime('%Y-%m-%d'),
+		offset=offset
+	)
+	schedules = requests.get(url, headers=_HEADERS).json()
+
+	return schedules
+
+
+def parse_all_stations() -> Dict:
 	''' Получить все станции yandex.api '''
 
 	url = 'https://api.rasp.yandex.net/v3.0/stations_list/?' + \
@@ -42,46 +62,46 @@ def parse_all_stations() -> dict:
 	return response.json()
 
 
-import json
-# x = parse_all_stations()
-# with open('stations.json', mode='w') as fp:
-# 	json.dump(x, fp, indent=2)#, ensure_ascii=True)
-# print('function json.dump is finished')
+def create_stations() -> None:
+	''' Сохранить все станции yandex.api в .json и базу данных '''
+	import json
 
-with open('stations.json', mode='r') as fp:
-	data = json.load(fp)
+	x = parse_all_stations()
+	with open('stations.json', mode='w') as fp:
+		json.dump(x, fp, indent=2)#, ensure_ascii=True)
+	print('function json.dump is finished')
 
-	for country in data['countries']:
-		country_title = country['title']
+	with open('stations.json', mode='r') as fp:
+		data = json.load(fp)
 
-		for region in country['regions']:
-			region_title = region['title']
-			
-			for settlement in region['settlements']:
-				settlement_title = settlement['title']
+		for country in data['countries']:
+			country_title = country['title']
 
-				for station in settlement['stations']:
-					station_title = station['title']
-					yandex_code = station['codes'].get('yandex_code')
-					esr_code = station['codes'].get('esr_code')
-					type_ = station['station_type']
-					transport_type = station['transport_type']
+			for region in country['regions']:
+				region_title = region['title']
+				
+				for settlement in region['settlements']:
+					settlement_title = settlement['title']
 
-					new_station = Station(
-						yandex_code=yandex_code,
-						esr_code=esr_code,
-						title=station_title,
-						type=type_,
-						transport=transport_type,
-						settlement=settlement_title,
-						region=region_title,
-						country=country_title
-					)
-					db.session.add(new_station)
+					for station in settlement['stations']:
+						station_title = station['title']
+						yandex_code = station['codes'].get('yandex_code')
+						esr_code = station['codes'].get('esr_code')
+						type_ = station['station_type']
+						transport_type = station['transport_type']
 
-	db.session.commit()
+						new_station = Station(
+							yandex_code=yandex_code,
+							esr_code=esr_code,
+							title=station_title,
+							type=type_,
+							transport=transport_type,
+							settlement=settlement_title,
+							region=region_title,
+							country=country_title
+						)
+						db.session.add(new_station)
 
-	# x = data['countries'][0]
-	# print(x['regions'][0].keys())
-	# print(x['codes'].keys())
-	# print(x['title'])
+		db.session.commit()
+
+	print('function json.load is finished')

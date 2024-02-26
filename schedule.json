@@ -1,0 +1,1749 @@
+{
+  "search": {
+    "from": {
+      "type": "station",
+      "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+      "short_title": "",
+      "popular_title": null,
+      "code": "s9628674",
+      "station_type": "airport",
+      "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+      "transport_type": "plane"
+    },
+    "to": {
+      "type": "station",
+      "title": "\u042e\u043d\u0434\u0443\u043c",
+      "short_title": "",
+      "popular_title": "",
+      "code": "s9628059",
+      "station_type": "airport",
+      "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+      "transport_type": "plane"
+    },
+    "date": "2024-02-26"
+  },
+  "segments": [
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T13:10:00-04:00",
+      "arrival": "2024-02-27T16:30:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "code": "c202"
+        },
+        {
+          "type": "settlement",
+          "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+          "short_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+          "popular_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+          "code": "c10376"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "DL 1940",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "carrier": {
+              "code": 877,
+              "title": "Delta Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "DL",
+                "icao": "DAL"
+              }
+            },
+            "vehicle": "Airbus A319",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "DL-1940_240226_c877_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "4",
+          "stops": "",
+          "duration": 8880.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T13:10:00-04:00",
+          "arrival": "2024-02-26T14:38:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 13620.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041a\u0435\u043d\u043d\u0435\u0434\u0438",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600371",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041a\u0435\u043d\u043d\u0435\u0434\u0438",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600371",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "SN 502",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a \u2014 \u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a \u2014 \u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "carrier": {
+              "code": 1048,
+              "title": "Brussels Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "SN",
+                "icao": "BEL"
+              }
+            },
+            "vehicle": "Airbus \u0410330-300",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "SN-502_240226_c1048_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "popular_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "code": "c10376"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "1",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 26100.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T18:25:00-05:00",
+          "arrival": "2024-02-27T07:40:00+01:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 12300.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "popular_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "code": "c10376"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9623583",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9623583",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "SN 223",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c \u2014 \u041a\u043e\u043d\u0430\u043a\u0440\u0438",
+            "short_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c \u2014 \u041a\u043e\u043d\u0430\u043a\u0440\u0438",
+            "carrier": {
+              "code": 1048,
+              "title": "Brussels Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "SN",
+                "icao": "BEL"
+              }
+            },
+            "vehicle": "Airbus \u0410330-300",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "SN-223_240227_c1048_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "short_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "popular_title": "\u0411\u0440\u044e\u0441\u0441\u0435\u043b\u044c",
+            "code": "c10376"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 23100.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T11:05:00+01:00",
+          "arrival": "2024-02-27T16:30:00+00:00"
+        }
+      ]
+    },
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T20:05:00-04:00",
+      "arrival": "2024-02-28T01:05:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "code": "c10393"
+        },
+        {
+          "type": "settlement",
+          "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "code": "c10478"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "BA 158",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u041b\u043e\u043d\u0434\u043e\u043d",
+            "carrier": {
+              "code": 309,
+              "title": "British Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "BA",
+                "icao": "BAW"
+              }
+            },
+            "vehicle": "Boeing 777",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "BA-158_240226_c309_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "5",
+          "stops": "",
+          "duration": 24600.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T20:05:00-04:00",
+          "arrival": "2024-02-27T06:55:00+00:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 18300.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u0425\u0438\u0442\u0440\u043e\u0443",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600378",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u0425\u0438\u0442\u0440\u043e\u0443",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600378",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "BA 518",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "carrier": {
+              "code": 309,
+              "title": "British Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "BA",
+                "icao": "BAW"
+              }
+            },
+            "vehicle": "Airbus A319",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "BA-518_240227_c309_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "5",
+          "arrival_terminal": "1",
+          "stops": "",
+          "duration": 10500.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T12:00:00+00:00",
+          "arrival": "2024-02-27T14:55:00+00:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 20700.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "TP 1499",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "carrier": {
+              "code": 800,
+              "title": "Tap",
+              "codes": {
+                "sirena": null,
+                "iata": "TP",
+                "icao": "TAP"
+              }
+            },
+            "vehicle": "Airbus A320 NEO",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "TP-1499_240227_c800_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "1",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 15900.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T20:40:00+00:00",
+          "arrival": "2024-02-28T01:05:00+00:00"
+        }
+      ]
+    },
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T14:20:00-04:00",
+      "arrival": "2024-02-28T01:05:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "code": "c223"
+        },
+        {
+          "type": "settlement",
+          "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "code": "c10478"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "B6 204",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "carrier": {
+              "code": 216,
+              "title": "Jetblue Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "B6",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus \u0410320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "B6-204_240226_c216_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "C",
+          "stops": "",
+          "duration": 9360.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T14:20:00-04:00",
+          "arrival": "2024-02-26T15:56:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 19740.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "DL 124",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "carrier": {
+              "code": 877,
+              "title": "Delta Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "DL",
+                "icao": "DAL"
+              }
+            },
+            "vehicle": "Boeing 767-300",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "DL-124_240226_c877_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "E",
+          "arrival_terminal": "1",
+          "stops": "",
+          "duration": 23700.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T21:25:00-05:00",
+          "arrival": "2024-02-27T09:00:00+00:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 42000.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "TP 1499",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "carrier": {
+              "code": 800,
+              "title": "Tap",
+              "codes": {
+                "sirena": null,
+                "iata": "TP",
+                "icao": "TAP"
+              }
+            },
+            "vehicle": "Airbus A320 NEO",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "TP-1499_240227_c800_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "1",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 15900.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T20:40:00+00:00",
+          "arrival": "2024-02-28T01:05:00+00:00"
+        }
+      ]
+    },
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T14:20:00-04:00",
+      "arrival": "2024-02-28T13:10:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "code": "c223"
+        },
+        {
+          "type": "settlement",
+          "title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+          "short_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+          "popular_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+          "code": "c10466"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "B6 204",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "carrier": {
+              "code": 216,
+              "title": "Jetblue Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "B6",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus \u0410320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "B6-204_240226_c216_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "C",
+          "stops": "",
+          "duration": 9360.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T14:20:00-04:00",
+          "arrival": "2024-02-26T15:56:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 23700.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "B6 31",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "carrier": {
+              "code": 216,
+              "title": "Jetblue Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "B6",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus A320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "B6-31_240226_c216_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "short_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "popular_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "code": "c10466"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "C",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 25440.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T22:31:00-05:00",
+          "arrival": "2024-02-27T11:35:00+01:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 71700.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "short_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "popular_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "code": "c10466"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u0421\u0445\u0438\u043f\u0445\u043e\u043b",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623582",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u0421\u0445\u0438\u043f\u0445\u043e\u043b",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623582",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "CD 311",
+            "title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "carrier": {
+              "code": 60842,
+              "title": "Corendon Dutch Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "CD",
+                "icao": null
+              }
+            },
+            "vehicle": "Boeing 737-900",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "CD-311_240228_c60842_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "short_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "popular_title": "\u0410\u043c\u0441\u0442\u0435\u0440\u0434\u0430\u043c",
+            "code": "c10466"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 24000.0,
+          "start_date": "2024-02-28",
+          "departure": "2024-02-28T07:30:00+01:00",
+          "arrival": "2024-02-28T13:10:00+00:00"
+        }
+      ]
+    },
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T14:20:00-04:00",
+      "arrival": "2024-02-28T01:05:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "code": "c223"
+        },
+        {
+          "type": "settlement",
+          "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+          "code": "c202"
+        },
+        {
+          "type": "settlement",
+          "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+          "code": "c10478"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "B6 204",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "carrier": {
+              "code": 216,
+              "title": "Jetblue Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "B6",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus \u0410320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "B6-204_240226_c216_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "C",
+          "stops": "",
+          "duration": 9360.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T14:20:00-04:00",
+          "arrival": "2024-02-26T15:56:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 10140.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "UA 205",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "carrier": {
+              "code": 1008,
+              "title": "United Airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "UA",
+                "icao": "UAL"
+              }
+            },
+            "vehicle": "Airbus A319",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "UA-205_240226_c1008_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "B",
+          "arrival_terminal": "A",
+          "stops": "",
+          "duration": 5640.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T18:45:00-05:00",
+          "arrival": "2024-02-26T20:19:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 12960.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041d\u044c\u044e\u0430\u0440\u043a \u041b\u0438\u0431\u0435\u0440\u0442\u0438",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9626917",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041d\u044c\u044e\u0430\u0440\u043a \u041b\u0438\u0431\u0435\u0440\u0442\u0438",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9626917",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "TP 204",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a \u2014 \u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "carrier": {
+              "code": 800,
+              "title": "Tap",
+              "codes": {
+                "sirena": null,
+                "iata": "TP",
+                "icao": "TAP"
+              }
+            },
+            "vehicle": "Airbus A320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "TP-204_240226_c800_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "short_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "popular_title": "\u041d\u044c\u044e-\u0419\u043e\u0440\u043a",
+            "code": "c202"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "B",
+          "arrival_terminal": "1",
+          "stops": "",
+          "duration": 24300.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T23:55:00-05:00",
+          "arrival": "2024-02-27T11:40:00+00:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 32400.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": null,
+            "popular_title": null,
+            "code": "s9623730",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "TP 1499",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "carrier": {
+              "code": 800,
+              "title": "Tap",
+              "codes": {
+                "sirena": null,
+                "iata": "TP",
+                "icao": "TAP"
+              }
+            },
+            "vehicle": "Airbus A320 NEO",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "TP-1499_240227_c800_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "short_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "popular_title": "\u041b\u0438\u0441\u0441\u0430\u0431\u043e\u043d",
+            "code": "c10478"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "1",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 15900.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T20:40:00+00:00",
+          "arrival": "2024-02-28T01:05:00+00:00"
+        }
+      ]
+    },
+    {
+      "departure_from": {
+        "type": "station",
+        "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+        "short_title": "",
+        "popular_title": null,
+        "code": "s9628674",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "arrival_to": {
+        "type": "station",
+        "title": "\u042e\u043d\u0434\u0443\u043c",
+        "short_title": "",
+        "popular_title": "",
+        "code": "s9628059",
+        "station_type": "airport",
+        "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+        "transport_type": "plane"
+      },
+      "transport_types": [
+        "plane",
+        "plane",
+        "plane",
+        "plane"
+      ],
+      "departure": "2024-02-26T14:20:00-04:00",
+      "arrival": "2024-02-28T18:45:00+00:00",
+      "transfers": [
+        {
+          "type": "settlement",
+          "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+          "code": "c223"
+        },
+        {
+          "type": "settlement",
+          "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+          "code": "c10393"
+        },
+        {
+          "type": "settlement",
+          "title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+          "short_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+          "popular_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+          "code": "c10429"
+        }
+      ],
+      "has_transfers": true,
+      "details": [
+        {
+          "thread": {
+            "number": "B6 204",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b \u2014 \u0411\u043e\u0441\u0442\u043e\u043d",
+            "carrier": {
+              "code": 216,
+              "title": "Jetblue Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "B6",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus \u0410320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "B6-204_240226_c216_12"
+          },
+          "from": {
+            "type": "station",
+            "title": "\u0411\u0435\u0440\u043c\u0443\u0434\u044b",
+            "short_title": "",
+            "popular_title": null,
+            "code": "s9628674",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "",
+          "arrival_terminal": "C",
+          "stops": "",
+          "duration": 9360.0,
+          "start_date": "2024-02-26",
+          "departure": "2024-02-26T14:20:00-04:00",
+          "arrival": "2024-02-26T15:56:00-05:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 56040.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u041b\u043e\u0433\u0430\u043d",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9628266",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "BA 238",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d \u2014 \u041b\u043e\u043d\u0434\u043e\u043d",
+            "carrier": {
+              "code": 309,
+              "title": "British Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "BA",
+                "icao": "BAW"
+              }
+            },
+            "vehicle": "Boeing 787",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "BA-238_240227_c309_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "short_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "popular_title": "\u0411\u043e\u0441\u0442\u043e\u043d",
+            "code": "c223"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "E",
+          "arrival_terminal": "5",
+          "stops": "",
+          "duration": 23100.0,
+          "start_date": "2024-02-27",
+          "departure": "2024-02-27T07:30:00-05:00",
+          "arrival": "2024-02-27T18:55:00+00:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 40200.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u0425\u0438\u0442\u0440\u043e\u0443",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600378",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u0425\u0438\u0442\u0440\u043e\u0443",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9600378",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "BA 472",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d \u2014 \u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d \u2014 \u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "carrier": {
+              "code": 309,
+              "title": "British Airways",
+              "codes": {
+                "sirena": null,
+                "iata": "BA",
+                "icao": "BAW"
+              }
+            },
+            "vehicle": "Airbus \u0410320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "BA-472_240228_c309_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "short_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "popular_title": "\u041b\u043e\u043d\u0434\u043e\u043d",
+            "code": "c10393"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "short_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "popular_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "code": "c10429"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "5",
+          "arrival_terminal": "1",
+          "stops": "",
+          "duration": 7500.0,
+          "start_date": "2024-02-28",
+          "departure": "2024-02-28T06:05:00+00:00",
+          "arrival": "2024-02-28T09:10:00+01:00"
+        },
+        {
+          "is_transfer": true,
+          "duration": 18900.0,
+          "transfer_point": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "short_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "popular_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "code": "c10429"
+          },
+          "transfer_from": {
+            "type": "station",
+            "title": "\u042d\u043b\u044c-\u041f\u0440\u0430\u0442",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9623589",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          },
+          "transfer_to": {
+            "type": "station",
+            "title": "\u042d\u043b\u044c-\u041f\u0440\u0430\u0442",
+            "short_title": "",
+            "popular_title": "",
+            "code": "s9623589",
+            "station_type": "airport",
+            "station_type_name": "\u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442",
+            "transport_type": "plane"
+          }
+        },
+        {
+          "thread": {
+            "number": "VY 7574",
+            "title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430 \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430 \u2014 \u0411\u0430\u043d\u0436\u0443\u043b",
+            "carrier": {
+              "code": 1490,
+              "title": "Vueling airlines",
+              "codes": {
+                "sirena": null,
+                "iata": "VY",
+                "icao": null
+              }
+            },
+            "vehicle": "Airbus A320",
+            "express_type": null,
+            "transport_type": "plane",
+            "transport_subtype": {
+              "title": null,
+              "code": null,
+              "color": null
+            },
+            "uid": "VY-7574_240228_c1490_12"
+          },
+          "from": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "short_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "popular_title": "\u0411\u0430\u0440\u0441\u0435\u043b\u043e\u043d\u0430",
+            "code": "c10429"
+          },
+          "to": {
+            "type": "settlement",
+            "title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "short_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "popular_title": "\u0411\u0430\u043d\u0436\u0443\u043b",
+            "code": "c21012"
+          },
+          "departure_platform": "",
+          "arrival_platform": "",
+          "departure_terminal": "1",
+          "arrival_terminal": "",
+          "stops": "",
+          "duration": 19200.0,
+          "start_date": "2024-02-28",
+          "departure": "2024-02-28T14:25:00+01:00",
+          "arrival": "2024-02-28T18:45:00+00:00"
+        }
+      ]
+    }
+  ],
+  "interval_segments": [],
+  "pagination": {
+    "total": 6,
+    "limit": 100,
+    "offset": 0
+  }
+}
