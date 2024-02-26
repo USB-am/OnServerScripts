@@ -90,10 +90,16 @@ def get_text_messages(message) -> None:
 		_bot.register_next_step_handler(session, DBHandlers.change_city)
 
 	elif msg == BUTTONS_TEXT['from_station'].lower():
-		_bot.send_message(message.from_user.id, 'Пока что это не работает 😊')
+		session = _bot.reply_to(message,
+			'Введи название Станции отправления.\nДля отмены необходимо ввести "Отмена"'
+		)
+		_bot.register_next_step_handler(session, DBHandlers.change_from_station)
 
 	elif msg == BUTTONS_TEXT['to_station'].lower():
-		_bot.send_message(message.from_user.id, 'Пока что это не работает 😊')
+		session = _bot.reply_to(message,
+			'Введи название Станции прибытия.\nДля отмены необходимо ввести "Отмена"'
+		)
+		_bot.register_next_step_handler(session, DBHandlers.change_to_station)
 
 	else:
 		_bot.send_message(
