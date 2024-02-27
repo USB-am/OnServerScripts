@@ -94,13 +94,13 @@ def get_text_messages(message) -> None:
 		session = _bot.reply_to(message,
 			'Введи название Станции отправления.\nДля отмены необходимо ввести "Отмена"'
 		)
-		_bot.register_next_step_handler(session, Routes.user_station_select)
+		_bot.register_next_step_handler(session, Routes.change_from_station)
 
 	elif msg == BUTTONS_TEXT['to_station'].lower():
 		session = _bot.reply_to(message,
 			'Введи название Станции прибытия.\nДля отмены необходимо ввести "Отмена"'
 		)
-		_bot.register_next_step_handler(session, DBHandlers.change_to_station)
+		_bot.register_next_step_handler(session, Routes.change_to_station)
 
 	else:
 		_bot.send_message(
@@ -114,4 +114,7 @@ def callback_query(call: types.CallbackQuery) -> None:
 	''' Обработка нажатия InlineKeyboardButton's '''
 
 	if re.search(r's[\d]+', call.data) or re.search(r'c[\d]+', call.data):
-		DBHandlers.change_from_station(call)
+		if 'отправления' in call.message.text:
+			DBHandlers.change_from_station(call)
+		elif 'прибытия' in call.message.text:
+			DBHandlers.change_to_station(call)

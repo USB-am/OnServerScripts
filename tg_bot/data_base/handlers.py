@@ -1,4 +1,6 @@
 import logging
+from typing import Union
+
 from telebot import types
 
 from . import Station
@@ -43,12 +45,16 @@ def change_city(message: types.Message) -> None:
 	)
 
 
-def change_from_station(call: types.CallbackQuery) -> None:
+def change_from_station(call: Union[types.CallbackQuery, types.Message]) -> None:
 	''' Изменить Станцию отправления '''
 
 	logging.debug('change_from_station is started')
 
-	print(dir(call), call, type(call), sep='\n', end='\n'*3)
+	cancel_text = 'Отмена смены Станции отправления'
+
+	if isinstance(call, types.Message):
+		__BOT.send_message(call.chat.id, cancel_text)
+		return
 
 	finded_station = Station.query.filter_by(yandex_code=call.data).first()
 	call.message.text = finded_station.title
@@ -56,7 +62,7 @@ def change_from_station(call: types.CallbackQuery) -> None:
 		message=call.message,
 		attribute='from_station',
 		success_text='Станция отправления изменена с {old_value} на {new_value}',
-		cancel_text='Отмена смены Станции отправления'
+		cancel_text=cancel_text
 	)
 
 
@@ -65,8 +71,16 @@ def change_to_station(call: types.CallbackQuery) -> None:
 
 	logging.debug('change_to_station is started')
 
+	cancel_text = 'Отмена сметы Станции прибытия'
+
+	if isinstance(call, types.Message):
+		__BOT.send_message(call.chat.id, )
+		return
+
+	finded_station = Station.query.filter_by(yandex_code=call.data).first()
+	call.message.text = finded_station.title
 	__change_value(
-		message=message,
+		message=call.message,
 		attribute='to_station',
 		success_text='Станция прибытия изменена с {old_value} на {new_value}',
 		cancel_text='Отмена смены Станции прибытия'

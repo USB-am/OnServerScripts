@@ -40,8 +40,8 @@ STATION_TYPES = {
 }
 
 
-def user_station_select(message: types.Message) -> None:
-	''' Выбор станции пользователем '''
+def user_station_select(message: types.Message, reply_text: str) -> types.Message:
+	''' Выбор пользователем станции '''
 
 	logging.debug('user_station_select is started')
 
@@ -56,12 +56,27 @@ def user_station_select(message: types.Message) -> None:
 		btn = types.InlineKeyboardButton(btn_text, callback_data=station.yandex_code)
 		markup.add(btn)
 
-	session = __BOT.reply_to(
-		message,
-		'Выбери пункт отправления:',
-		reply_markup=markup
-	)
+	session = __BOT.reply_to(message, reply_text, reply_markup=markup)
+
+	return session
+
+
+def change_from_station(message: types.Message)	-> None:
+	''' Диалог изменения Станции отправления '''
+
+	logging.debug('routes.change_from_station is started')
+
+	session = user_station_select(message, reply_text='Введи пункт отправления:')
 	__BOT.register_next_step_handler(session, DBHandlers.change_from_station)
+
+
+def change_to_station(message: types.Message)	-> None:
+	''' Диалог изменения Станции отправления '''
+
+	logging.debug('routes.change_to_station is started')
+
+	session = user_station_select(message, reply_text='Введи пункт прибытия:')
+	__BOT.register_next_step_handler(session, DBHandlers.change_to_station)	
 
 
 def get_routes(message: types.Message) -> str:
