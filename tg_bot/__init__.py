@@ -15,8 +15,9 @@ from .data_base import handlers as DBHandlers
 
 
 BUTTONS_TEXT = {
-	'change_city': '🚂 Сменить город',
 	'show_weather': '☔️ Показать погоду',
+	'show_schedules': '🎟 Показать расписание',
+	'change_city': '🚂 Сменить город',
 	'from_station': '👉 Станция\nотправления',
 	'to_station': '👈 Станция\nприбытия',
 }
@@ -43,11 +44,13 @@ def start(message: types.Message) -> None:
 
 	# Создание кнопок чата
 	show_weather_btn = types.KeyboardButton(BUTTONS_TEXT['show_weather'])
+	show_schedules_btn = types.KeyboardButton(BUTTONS_TEXT['show_schedules'])
 	change_city_btn = types.KeyboardButton(BUTTONS_TEXT['change_city'])
 	from_station_btn = types.KeyboardButton(BUTTONS_TEXT['from_station'])
 	to_station_btn = types.KeyboardButton(BUTTONS_TEXT['to_station'])
 
 	markup.add(show_weather_btn)
+	markup.add(show_schedules_btn)
 	markup.add(change_city_btn)
 	markup.add(from_station_btn, to_station_btn)
 
@@ -89,6 +92,13 @@ def get_text_messages(message) -> None:
 			'Введи название города.\nДля отмены необходимо ввести "Отмена"'
 		)
 		_bot.register_next_step_handler(session, DBHandlers.change_city)
+
+	elif msg == BUTTONS_TEXT['show_schedules'].lower():
+		_bot.send_message(
+			message.from_user.id,
+			Routes.get_routes(message),
+			parse_mode='Markdown'
+		)
 
 	elif msg == BUTTONS_TEXT['from_station'].lower():
 		session = _bot.reply_to(message,

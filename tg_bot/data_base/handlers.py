@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+from typing import Union, Any
 
 from telebot import types
 
@@ -12,7 +12,7 @@ __BOT = Bot('')
 
 
 def __change_value(message: types.Message, attribute: str,
-                  success_text: str, cancel_text: str) -> None:
+                  success_text: str, cancel_text: str, value: Any=None) -> None:
 	''' Абстрактная функция изменения значения в БД по сообщению '''
 
 	if message.text.lower() == 'отмена':
@@ -22,7 +22,10 @@ def __change_value(message: types.Message, attribute: str,
 	user = find_else_create_user(message)
 	old_value = getattr(user, attribute)
 
-	update(user, attribute, message.text)
+	if value is None:
+		update(user, attribute, message.text)
+	else:
+		update(user, attribute, value)
 
 	__BOT.send_message(
 		message.chat.id,
@@ -62,7 +65,8 @@ def change_from_station(call: Union[types.CallbackQuery, types.Message]) -> None
 		message=call.message,
 		attribute='from_station',
 		success_text='Станция отправления изменена с {old_value} на {new_value}',
-		cancel_text=cancel_text
+		cancel_text=cancel_text,
+		value=finded_station.id
 	)
 
 
@@ -74,7 +78,7 @@ def change_to_station(call: types.CallbackQuery) -> None:
 	cancel_text = 'Отмена сметы Станции прибытия'
 
 	if isinstance(call, types.Message):
-		__BOT.send_message(call.chat.id, )
+		__BOT.send_message(call.chat.id, cancel_text)
 		return
 
 	finded_station = Station.query.filter_by(yandex_code=call.data).first()
@@ -83,5 +87,6 @@ def change_to_station(call: types.CallbackQuery) -> None:
 		message=call.message,
 		attribute='to_station',
 		success_text='Станция прибытия изменена с {old_value} на {new_value}',
-		cancel_text='Отмена смены Станции прибытия'
+		cancel_text=cancel_text,
+		value=finded_station.id
 	)

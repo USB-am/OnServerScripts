@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from telebot import types
 
@@ -6,6 +7,7 @@ from tg_bot.bot import Bot
 from tg_bot.data_base import Station
 from tg_bot.data_base import handlers as DBHandlers
 from tg_bot.data_base.manager import find_else_create_user
+from .api import get_schedule
 
 
 __BOT = Bot('')
@@ -83,6 +85,17 @@ def get_routes(message: types.Message) -> str:
 	''' Получить расписание маршрутов '''
 
 	user = find_else_create_user(message)
-	user_station_select(message)
+	from_station = Station.query.get(user.from_station)
+	to_station = Station.query.get(user.to_station)
+	schedule_json = get_schedule(from_station, to_station, datetime.now().date())
 
-	return 'Пока что это не работает'
+	output = f'Расписание между {from_station.title}/{to_station.title}\n\n'
+
+	for segment in schedule_json['segments']:
+		transport_types = ''.join([TRANSPORT_TYPES[transport_type] for transport_type in set(segment['transport_types'])])
+		departure = datetime.fromisoformat(segment['departure'][:-1])
+		arrival = datetime.fromisoformat(segment['arrival'][:-1])
+
+		output += f'{departure} ➡ {arrival} {transport_types}\n'
+
+	return output.strip()
