@@ -1,8 +1,9 @@
 import logging
 from telebot import types
 
-from tg_bot.bot import Bot
+from . import Station
 from .manager import find_else_create_user, update
+from tg_bot.bot import Bot
 
 
 __BOT = Bot('')
@@ -10,7 +11,7 @@ __BOT = Bot('')
 
 def __change_value(message: types.Message, attribute: str,
                   success_text: str, cancel_text: str) -> None:
-	''' Абстрактная функция изменения значения в БД '''
+	''' Абстрактная функция изменения значения в БД по сообщению '''
 
 	if message.text.lower() == 'отмена':
 		__BOT.send_message(message.chat.id, cancel_text)
@@ -42,20 +43,24 @@ def change_city(message: types.Message) -> None:
 	)
 
 
-def change_from_station(message: types.Message) -> None:
+def change_from_station(call: types.CallbackQuery) -> None:
 	''' Изменить Станцию отправления '''
 
 	logging.debug('change_from_station is started')
 
+	print(dir(call), call, type(call), sep='\n', end='\n'*3)
+
+	finded_station = Station.query.filter_by(yandex_code=call.data).first()
+	call.message.text = finded_station.title
 	__change_value(
-		message=message,
+		message=call.message,
 		attribute='from_station',
 		success_text='Станция отправления изменена с {old_value} на {new_value}',
 		cancel_text='Отмена смены Станции отправления'
 	)
 
 
-def change_to_station(message: types.Message) -> None:
+def change_to_station(call: types.CallbackQuery) -> None:
 	''' Изменить Станцию прибытия '''
 
 	logging.debug('change_to_station is started')

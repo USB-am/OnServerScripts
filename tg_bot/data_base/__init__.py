@@ -9,21 +9,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tg_bot.db'
 db = SQLAlchemy(app)
 
 
-class TelegramUser(db.Model):
-	''' Информация о пользователе бота '''
-
-	__tablename__ = 'telegram_user'
-	id = db.Column(db.Integer, primary_key=True)
-	chat_id = db.Column(db.Integer, unique=True)
-	name = db.Column(db.String(255), nullable=False)
-	city = db.Column(db.String(255), default='Москва', nullable=True)
-
-	def __str__(self):
-		return f'[{self.chat_id}] {self.name}'
-
-
 class Station(db.Model):
-	''' Информация о станции электрички '''
+	''' Информация о станции '''
 
 	__tablename__ = 'train_station'
 	id = db.Column(db.Integer, primary_key=True)
@@ -38,6 +25,21 @@ class Station(db.Model):
 
 	def __str__(self):
 		return f'<{self.type.title()}Station "{self.title}" ({self.transport})>'
+
+
+class TelegramUser(db.Model):
+	''' Информация о пользователе бота '''
+
+	__tablename__ = 'telegram_user'
+	id = db.Column(db.Integer, primary_key=True)
+	chat_id = db.Column(db.Integer, unique=True)
+	name = db.Column(db.String(255), nullable=False)
+	city = db.Column(db.String(255), default='Москва', nullable=True)
+	from_station = db.Column(db.Integer, db.ForeignKey(Station.id), nullable=True)
+	to_station = db.Column(db.Integer, db.ForeignKey(Station.id), nullable=True)
+
+	def __str__(self):
+		return f'[{self.chat_id}] {self.name}'
 
 
 db.create_all()

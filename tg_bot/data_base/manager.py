@@ -10,7 +10,7 @@ from . import db, TelegramUser, Station
 def find_user(message: types.Message) -> Union[TelegramUser, None]:
 	''' Поиск пользователя по message.chat.id '''
 
-	logging.debug(f'[{message.chat.id}] find_user({message.text})')
+	logging.debug(f'find_user is started')
 	user = TelegramUser.query.filter_by(chat_id=message.chat.id).first()
 
 	return user

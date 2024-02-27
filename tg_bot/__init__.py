@@ -1,3 +1,4 @@
+import re
 import logging
 
 from telebot import types
@@ -9,7 +10,7 @@ from .data_base.manager import find_user, find_else_create_user
 _bot = Bot(TELEGRAM_TOKEN)
 
 from .weather import handlers as Weather
-from .routes import api as RoutesAPI
+from .routes import handlers as Routes
 from .data_base import handlers as DBHandlers
 
 
@@ -93,7 +94,7 @@ def get_text_messages(message) -> None:
 		session = _bot.reply_to(message,
 			'Введи название Станции отправления.\nДля отмены необходимо ввести "Отмена"'
 		)
-		_bot.register_next_step_handler(session, DBHandlers.change_from_station)
+		_bot.register_next_step_handler(session, Routes.user_station_select)
 
 	elif msg == BUTTONS_TEXT['to_station'].lower():
 		session = _bot.reply_to(message,
@@ -106,3 +107,11 @@ def get_text_messages(message) -> None:
 			message.from_user.id,
 			'Неизвестный запрос.\nВведи что-нибудь нормальное да!'
 		)
+
+
+@_bot.callback_query_handler(func=lambda call: True)
+def callback_query(call: types.CallbackQuery) -> None:
+	''' Обработка нажатия InlineKeyboardButton's '''
+
+	if re.search(r's[\d]+', call.data) or re.search(r'c[\d]+', call.data):
+		DBHandlers.change_from_station(call)
