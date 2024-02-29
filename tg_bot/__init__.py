@@ -16,11 +16,46 @@ from .data_base import handlers as DBHandlers
 
 BUTTONS_TEXT = {
 	'show_weather': '☔️ Показать погоду',
-	'show_schedules': '🎟 Показать расписание',
+	'show_schedules': '🎟👉 Показать расписание',
+	'show_schedules_back': '🎟👈 Показать расписание',
+	'settings': '⚙ Настройки',
 	'change_city': '🚂 Сменить город',
 	'from_station': '👉 Станция\nотправления',
 	'to_station': '👈 Станция\nприбытия',
+	'back': '◀ Назад',
 }
+
+
+def _create_main_markup() -> types.ReplyKeyboardMarkup:
+	''' Создание кнопок главного окна '''
+	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
+	show_weather_btn = types.KeyboardButton(BUTTONS_TEXT['show_weather'])
+	show_schedules_btn = types.KeyboardButton(BUTTONS_TEXT['show_schedules'])
+	show_schedules_back_btn = types.KeyboardButton(BUTTONS_TEXT['show_schedules_back'])
+	settings_btn = types.KeyboardButton(BUTTONS_TEXT['settings'])
+
+	markup.add(show_weather_btn)
+	markup.add(show_schedules_btn, show_schedules_back_btn)
+	markup.add(settings_btn)
+
+	return markup
+
+
+def _create_settings_markup() -> types.ReplyKeyboardMarkup:
+	''' Создание кнопок настроек '''
+	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
+	change_city_btn = types.KeyboardButton(BUTTONS_TEXT['change_city'])
+	from_station_btn = types.KeyboardButton(BUTTONS_TEXT['from_station'])
+	to_station_btn = types.KeyboardButton(BUTTONS_TEXT['to_station'])
+	back_btn = types.KeyboardButton(BUTTONS_TEXT['back'])
+
+	markup.add(change_city_btn)
+	markup.add(from_station_btn, to_station_btn)
+	markup.add(back_btn)
+
+	return markup
 
 
 def start_bot() -> None:
@@ -40,27 +75,12 @@ def stop_bot() -> None:
 def start(message: types.Message) -> None:
 	''' Обработка команды /start '''
 
-	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-
-	# Создание кнопок чата
-	show_weather_btn = types.KeyboardButton(BUTTONS_TEXT['show_weather'])
-	show_schedules_btn = types.KeyboardButton(BUTTONS_TEXT['show_schedules'])
-	change_city_btn = types.KeyboardButton(BUTTONS_TEXT['change_city'])
-	from_station_btn = types.KeyboardButton(BUTTONS_TEXT['from_station'])
-	to_station_btn = types.KeyboardButton(BUTTONS_TEXT['to_station'])
-
-	markup.add(show_weather_btn)
-	markup.add(show_schedules_btn)
-	markup.add(change_city_btn)
-	markup.add(from_station_btn, to_station_btn)
-
-	# Создание пользователя, если его не было
+	markup = _create_main_markup()
 	user = find_else_create_user(message)
-
-	# Вернуть сообщение с приветствием
 	_bot.send_message(
 		message.from_user.id,
-		f'Ну привет, {user.name}!', reply_markup=markup
+		f'Ну привет, {user.name}!',
+		reply_markup=markup
 	)
 
 
@@ -87,18 +107,43 @@ def get_text_messages(message) -> None:
 			)
 			logging.info(f'Send {find_user(message)} current weather.')
 
-	elif msg == BUTTONS_TEXT['change_city'].lower():
-		session = _bot.reply_to(message,
-			'Введи название города.\nДля отмены необходимо ввести "Отмена"'
-		)
-		_bot.register_next_step_handler(session, DBHandlers.change_city)
-
 	elif msg == BUTTONS_TEXT['show_schedules'].lower():
 		_bot.send_message(
 			message.from_user.id,
 			Routes.get_routes(message),
 			parse_mode='Markdown'
 		)
+		logging.info(f'Send {find_user(message)} schedules.')
+
+	elif msg == BUTTONS_TEXT['show_schedules_back'].lower():
+		_bot.send_message(
+			message.from_user.id,
+			Routes.get_back_routes(message),
+			parse_mode='Markdown'
+		)
+		logging.info(f'Send {find_user(message)} back schedules.')
+
+	elif msg == BUTTONS_TEXT['settings'].lower():
+		markup = _create_settings_markup()
+		_bot.send_message(
+			message.from_user.id,
+			'Настройки',
+			reply_markup=markup
+		)
+
+	elif msg == BUTTONS_TEXT['back'].lower():
+		markup = _create_main_markup()
+		_bot.send_message(
+			message.from_user.id,
+			'Главная',
+			reply_markup=markup
+		)
+
+	elif msg == BUTTONS_TEXT['change_city'].lower():
+		session = _bot.reply_to(message,
+			'Введи название города.\nДля отмены необходимо ввести "Отмена"'
+		)
+		_bot.register_next_step_handler(session, DBHandlers.change_city)
 
 	elif msg == BUTTONS_TEXT['from_station'].lower():
 		session = _bot.reply_to(message,

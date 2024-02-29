@@ -117,6 +117,49 @@ def get_routes(message: types.Message, date_: date=None) -> str:
 
 	schedule_json = get_schedule(from_station, to_station, date_)
 
+	return _parse_schedule_json(from_station, to_station, schedule_json, date_)
+
+
+def get_back_routes(message: types.Message, date_: date=None) -> str:
+	'''
+	Получить ОБРАТНОЕ расписание маршрутов.
+
+	~params:
+	message: types.Message - объект сообщения Telegram;
+	date_: date=None - дата, на которую необходимо получить расписание.
+	'''
+
+	if date_ is None:
+		date_ = datetime.now().date()
+
+	user = find_else_create_user(message)
+	from_station = Station.query.get(user.from_station)
+	to_station = Station.query.get(user.to_station)
+
+	if not is_valid_user_stations(user):
+		fs = from_station.title if user.from_station else 'Неизвестно'
+		ts = to_station.title if user.to_station else 'Неизвестно'
+		return 'Сначало надо выбрать станции!\n' + \
+			f'- Станция отправления: {fs}\n' + \
+			f'- Станция прибытия: {ts}'
+
+	schedule_json = get_schedule(to_station, from_station, date_)
+
+	return _parse_schedule_json(to_station, from_station, schedule_json, date_)
+
+
+def _parse_schedule_json(from_station: Station, to_station: Station,
+                         schedule_json: dict, date_: date) -> str:
+	'''
+	Приведение ответа yandex.rasp API в пользовательский вид.
+
+	~params:
+	from_station: Station - Станция отправления;
+	to_station: Station - Станция прибытия;
+	schedule_json: dict - расписание yandex.rasp API;
+	data_: date - дата вывода расписания.
+	'''
+
 	output = '{dt}\nРасписание между {from_}/{to}\n\n'.format(
 		from_=from_station.title,
 		to=to_station.title,
