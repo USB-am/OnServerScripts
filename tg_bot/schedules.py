@@ -61,7 +61,7 @@ def start_timer() -> None:
 def close_timer() -> None:
 	''' Закрыть счетчик событий '''
 
-	schedule_process.termite()
+	schedule_process.terminate()
 
 
 schedule_process = multiprocessing.Process(target=start_schedule, args=())
