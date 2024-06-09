@@ -1,7 +1,47 @@
+import os
+from datetime import datetime
+from dataclasses import dataclass
+from typing import List
+from pprint import pprint
+
 import requests
 from requests.exceptions import ConnectionError
 from geopy.geocoders import Nominatim
 from geopy.location import Location
+
+
+class LocalityError(Exception):
+	''' Ошибка поиска адреса '''
+
+
+@dataclass
+class Locality:
+	id: int
+	name: str
+	url: str
+
+	def __str__(self):
+		return self.name
+
+
+@dataclass
+class WeatherElement:
+	''' Хранилище данных о погоде в определенный период времени '''
+
+	start: datetime
+	temp: float
+	humidity: int
+	weather_icon: str
+	weather_desc: str
+
+	def __str__(self):
+		return WEATHER_CHAT_OUTPUT.format(
+			start_time=self.start.strftime('%H:%M'),
+			temp=f'+{round(self.temp)}' if self.temp >= 0 else round(self.temp),
+			humidity=self.humidity,
+			weather_type=self.weather_icon,
+			weather_description=self.weather_desc
+		)
 
 
 codes = {
@@ -121,15 +161,19 @@ codes = {
 # DOCUMENTATION
 # https://www.gismeteo.ru/api/#kind
 # https://docs.gismeteo.net/v3/weather/
-_REQUEST = 'https://api.gismeteo.net/v2/weather/forecast/4368/?lang=ru&days=1'
+API_KEY = os.environ['GISMETEO_API_KEY']
+_GET_WEATHER = 'https://api.gismeteo.net/v3/weather/forecast/h1/?latitude={lat}&longitude={lon}'
+_FIND_LOCALITY_REQUEST = 'https://api.gismeteo.net/v2/search/cities/?query={locality}'
 # Request headers
 _HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.5.715 Yowser/2.5 Safari/537.36',
 	'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
 	'accept-language': 'ru,en;q=0.9',
-	'X-Gismeteo-Token': '56b30cb255.3443075',
+	'X-Gismeteo-Token': API_KEY,
 	'Accept-Encoding': 'gzip',
 }
+# Шаблон вывода погоды на определенный период времени
+WEATHER_CHAT_OUTPUT = '[{start_time}] {temp}°C🌡  {humidity}%🌀  {weather_type} {weather_description}'
 
 
 def get_location(address: str) -> Location:
@@ -145,10 +189,80 @@ def get_coords(address: str) -> tuple:
 	''' Получить координаты по адресу '''
 
 	loc = get_location(address)
+	print(address, loc, sep='\n')
 
 	return (loc.latitude, loc.longitude)
 
 
+def send_request(url: str) -> dict:
+	r = requests.get(url, headers=_HEADERS)
+	if r.status_code != 200:
+		raise ConnectionError
+
+	return r.json()
+
+
+def get_locality(address: str) -> Locality:
+	''' Получить данные населенного пункта '''
+
+	r = send_request(_FIND_LOCALITY_REQUEST.format(locality=address))
+	try:
+		locality_data = r['response']['items'][0]	# Get first locality
+	except IndexError:
+		raise LocalityError(f'{address} not found!')
+
+	return Locality(id=locality_data['id'],
+	                name=locality_data['name'],
+	                url=locality_data['url'])
+
+
+def parse_weather(locality: str) -> List[WeatherElement]:
+	'''
+	Получить прогноз через GISMETEO API.
+
+	~params:
+	locality: str - населенный пункт, прогноз которого будет выведен.
+	'''
+
+	try:
+		lat, lon = get_coords(locality)
+	except Exception as LocalityError:
+		return []
+	url = _GET_WEATHER.format(lat=lat, lon=lon)
+	try:
+		r = send_request(url)
+		weather_data = r.get('data', [])
+	except ConnectionError:
+		return []
+
+	result = []
+	for data in weather_data:
+		try:
+			# Время
+			start = datetime.fromtimestamp(data['date']['unix'])
+			# Температура
+			temp = data['temperature']['air']['C']
+			# Влажность
+			humidity = data['humidity']['percent']
+			# Иконка
+			weather_icon = data['icon']['emoji']
+			# Описание
+			weather_desc = data['description']
+		except Exception as parse_error:
+			logging.warning(f'Error when trying to parse weather!\n' +
+			                 '{parse_error}')
+			continue
+
+		result.append(WeatherElement(
+			start=start,
+			temp=temp,
+			humidity=humidity,
+			weather_icon=weather_icon,
+			weather_desc=weather_desc
+		))
+		
+	return result
+
+
 if __name__ == '__main__':
-	data = requests.get('https://api.gismeteo.net/v2/search/cities/?query=москв', headers=_HEADERS).json()
-	print(data)
+	parse_weather('ростов-на-до')
