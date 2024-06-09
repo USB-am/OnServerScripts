@@ -13,10 +13,15 @@ __BOT = Bot('')
 
 
 def __filter_weather_list(weather: List[WeatherElement],
-	date: datetime.date) -> List[WeatherElement]:
+                          date: datetime.date) -> List[WeatherElement]:
 	''' Фильтрует данные о погоде на конкретный день '''
 
+	# Смещение на 3 часа вперед (потому что на сервере на 3 часа назад)
+	now_datetime = datetime.datetime.now() + datetime.timedelta(hours=3)
+	now_datetime -= datetime.timedelta(minutes=now_datetime.minute + 1)
+
 	filtered_weather = filter(lambda w: w.start.date() == date, weather)
+	filtered_weather = filter(lambda w: w.start >= now_datetime, filtered_weather)
 
 	return list(filtered_weather)
 

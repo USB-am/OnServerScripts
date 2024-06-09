@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from dataclasses import dataclass
 from typing import List
-from pprint import pprint
+import logging
 
 import requests
 from requests.exceptions import ConnectionError
@@ -189,8 +189,6 @@ def get_coords(address: str) -> tuple:
 	''' Получить координаты по адресу '''
 
 	loc = get_location(address)
-	print(address, loc, sep='\n')
-
 	return (loc.latitude, loc.longitude)
 
 
