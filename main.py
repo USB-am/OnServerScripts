@@ -1,22 +1,23 @@
-import logging
+# -*- coding: utf-8 -*-
 
-from tg_bot import start_bot, stop_bot
-from tg_bot.schedules import start_timer, close_timer
+import sys
 
-
-# Set logging level
-logging.basicConfig(level=logging.INFO)
+from src import tg_bot
+from src.weather_api import find_locality, get_weather
 
 
-def main() -> None:
-	try:
-		start_timer()
-		start_bot()
-	except Exception as error:
-		logging.critical(error)
-		close_timer()
-		stop_bot()
+tg_bot.load_config('config.json')
+bot = tg_bot.TelegramAPI()
+bot.listen()
 
 
-if __name__ == '__main__':
-	main()
+@bot.command(name='test')
+def test_command(msg: tg_bot.Message) -> None:
+    loclaity = find_locality('Ростов-на-Дону')
+    weather = get_weather(loclaity)
+    bot.send_message(msg.user.id, weather, reply_markup={})
+
+
+@bot.command(name='exit')
+def exit_command(msg: tg_bot.Message) -> None:
+    sys.exit()
