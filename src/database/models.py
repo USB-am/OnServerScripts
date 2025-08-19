@@ -36,3 +36,6 @@ class User(db.Model):
 
     def __str__(self):
         return f'[{self.chat_id}] {self.name}'
+
+
+db.create_all()

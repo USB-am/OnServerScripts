@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError
 
 from .models import db, User
 from .exceptions import DBError
-from tg_bot import Message
+from src.tg_bot import Message
 
 
 def create_user(chat_id: int,
@@ -13,12 +13,11 @@ def create_user(chat_id: int,
                 from_station: int=None,
                 to_station: int=None) -> User:
     ''' Создать пользователя в базе данных '''
-    new_user = User(
-        chat_id=chat_id,
-        name=name,
-        city=city,
-        from_station=from_station,
-        to_station=to_station)
+    new_user = User(chat_id=chat_id,
+                    name=name,
+                    city=city,
+                    from_station=from_station,
+                    to_station=to_station)
     try:
         db.session.add(new_user)
         db.session.commit()
