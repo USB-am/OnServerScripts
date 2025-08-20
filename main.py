@@ -6,7 +6,7 @@ from typing import List
 
 from src import tg_bot
 from src.weather_api import find_locality, get_weather
-from src.database import find_else_create_user
+from src.database import find_else_create_user, update
 
 
 tg_bot.load_config('config.json')
@@ -70,6 +70,13 @@ def text_handler(msg: tg_bot.Message) -> None:
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
         reply_markup = ReplySettingsButtons().reply_markup()
+    elif text == TextBtnSettings.change_city.value.lower():
+        msg_text = 'Введи название города:'
+        reply_markup = {}
+        bot.wait_user_message(chat_id=msg.user.id,
+                              message=msg_text,
+                              callback=change_user_city)
+        return
     elif text == TextBtnSettings.back_to_menu.value.lower():
         msg_text = 'Меню'
         reply_markup = ReplyStartButtons().reply_markup()
@@ -77,6 +84,25 @@ def text_handler(msg: tg_bot.Message) -> None:
     bot.send_message(chat_id=msg.user.id,
                      message=msg_text,
                      reply_markup=reply_markup)
+
+
+def change_user_city(msg: tg_bot.Message) -> None:
+    ''' Сменить город пользователя '''
+    if msg.text.lower() == 'отмена':
+        bot.send_message(chat_id=msg.user.id,
+                         message='Отмена смены города',
+                         reply_markup=ReplySettingsButtons().reply_markup())
+    elif not msg.text:
+        bot.send_message(chat_id=msg.user.id,
+                         message='Поле не может быть пустым',
+                         reply_markup={})
+    user = find_else_create_user(msg)
+    old_city_name = user.city
+    update(entry=user, arg='city', value=msg.text)
+    bot.send_message(chat_id=msg.user.id,
+                     message=f'Город был изменен с *{old_city_name}* на *{msg.text}*',
+                     reply_markup={},
+                     parse_mode='Markdown')
 
 
 @bot.command(name='test')
