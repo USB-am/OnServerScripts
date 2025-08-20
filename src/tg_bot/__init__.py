@@ -139,9 +139,11 @@ class TelegramAPI:
         self._bot_commands: Dict[str, Callable] = {}
         self._bot_callbacks: Dict[str, Callable] = {}
         self._waiting_users: Dict[int, Callable] = {}
+        self._text_callback: Callable = lambda msg: None
 
     @add_debug_log
-    def send_message(self, chat_id: int, message: str, reply_markup: str=None) -> None:
+    def send_message(self, chat_id: int, message: str,
+                     reply_markup: str=None, **kwargs) -> None:
         ''' Отправить сообщение пользователю chat_id '''
         self._send_request(
             url=f'{self.url}{self.token}/sendMessage?chat_id={chat_id}',
@@ -149,7 +151,7 @@ class TelegramAPI:
                 'text': message,
                 'disable_web_page_preview': True,
                 'reply_markup': reply_markup,
-                'parse_mode': 'Markdown'
+                **kwargs
             }
         )
 
@@ -231,6 +233,8 @@ class TelegramAPI:
                         self._bot_commands[message.text](message)
                     elif not message.is_command and message.user.id in self._waiting_users:
                         self._waiting_users[message.user.id](message)
+                    else:
+                        self._text_callback(message)
                 elif 'callback_query' in update:
                     callback = self._get_callback(update)
                     self._bot_callbacks[callback.data](callback)
@@ -317,6 +321,11 @@ class TelegramAPI:
     def callback(self, name: str) -> None:
         def decorator(func):
             self._bot_callbacks[name] = func
+        return decorator
+
+    def text(self) -> None:
+        def decorator(func):
+            self._text_callback = func
         return decorator
 
     def _delete_from_waiting(self, message: Message, callback: Callable) -> None:

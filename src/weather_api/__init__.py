@@ -43,7 +43,7 @@ def get_coords(locality: Locality) -> Tuple[float, float]:
     :param locality: локация, координаты которой будут возвращены
     :returns: кортеж координат локации (долгота, широта)
     '''
-    loc = Nominatim(user_agent='Usbam').geocode(locality.name)
+    loc = Nominatim(user_agent='Usbam', timeout=3).geocode(locality.name)
     return (loc.latitude, loc.longitude)
 
 
