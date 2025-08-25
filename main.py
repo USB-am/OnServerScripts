@@ -5,12 +5,15 @@ import enum
 from typing import List
 
 from src import tg_bot
+tg_bot.load_config('config.json')
+
 from src.weather_api import find_locality, get_weather
 from src.database import find_else_create_user, update
 from src.tg_bot.initializer import TelegramBot
+from src.routes_api import YandexRaspAPI
+from src.routes_api.update_stations import get_stations
 
 
-tg_bot.load_config('config.json')
 bot = TelegramBot()
 bot.listen()
 
@@ -129,6 +132,17 @@ def test_command(msg: tg_bot.Message) -> None:
     locality = find_locality('Ростов-на-Дону')
     weather = get_weather(locality)
     bot.send_message(msg.user.id, weather, reply_markup={})
+
+
+@bot.command(name='route')
+def route_command(msg: tg_bot.Message) -> None:
+    # routes = get_routes()
+    pass
+
+
+@bot.command(name='stations')
+def stations_command(msg: tg_bot.Message) -> None:
+    get_stations()
 
 
 @bot.command(name='exit')
