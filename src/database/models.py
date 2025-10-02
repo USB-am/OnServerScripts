@@ -13,7 +13,7 @@ class Country(db.Model):
     __tablename__ = 'country'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
-    yandex_code = db.Column(db.String(20, unique=True))
+    yandex_code = db.Column(db.String(20), unique=True)
 
     def __str__(self):
         return self.title
