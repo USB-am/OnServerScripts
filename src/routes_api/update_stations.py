@@ -1,23 +1,10 @@
 import os
-import json
+from typing import Iterable
 
 import requests
 
-from dataclasses import dataclass
-from typing import Iterable
-
-
-@dataclass
-class Station:
-    yandex_code: str
-    station_type: str
-    title: str
-    lat: float
-    lon: float
-    transport_type: str
-
-    def __str__(self):
-        return self.title
+from src.database import add_entry
+from src.database.models import Country, Region, Settlement, Station
 
 
 def get_stations() -> Iterable:
@@ -32,7 +19,38 @@ def get_stations() -> Iterable:
     req = requests.get(url.format(token=os.environ['YANDEX_RASP_TOKEN']),
                        headers=headers)
     response = req.json()
-    with open('stations.json', 'w') as file:
-        json.dump(response, file, indent=4)
-    # x = response['countries'][100]
-    # print(x, type(x), sep='\n')
+
+    for country in response:
+        country_title = country.get('title')
+        country_code = country.get('codes', {}).get('yandex_code')
+        country_entry = Country(title=country_title,
+                                yandex_code=country_code)
+        add_entry(country_entry)
+
+        for region in country.get('regions', []):
+            region_title = region.get('title')
+            region_code = region.get('codes', {}).get('yandex_code')
+            region_entry = Region(title=region_title,
+                                  yandex_code=region_code,
+                                  country=country_entry.id)
+            add_entry(region_entry)
+
+            for settlement in region.get('settlements', []):
+                settlement_title = settlement.get('title')
+                settlement_code = settlement.get('codes', {}).get('yandex_code')
+                settlement_entry = Settlement(title=settlement_title,
+                                              yandex_code=settlement_code,
+                                              region=region_entry.id)
+                add_entry(settlement_entry)
+
+                for station in settlement.get('stations', []):
+                    station_code = station.get('codes', {}).get('yandex_code')
+                    station_title = station.get('title')
+                    station_type = station.get('station_type')
+                    station_transport = station.get('transport_type')
+                    station_entry = Station(title=station_title,
+                                            type=station_type,
+                                            yandex_code=station_code,
+                                            transport=station_transport,
+                                            settlement=settlement_entry.id)
+                    add_entry(station_entry)
