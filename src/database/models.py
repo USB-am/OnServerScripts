@@ -19,12 +19,20 @@ class Country(db.Model):
         return self.title
 
 
+class Region(db.Model):
+    __tablename__ = 'region'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    yandex_code = db.Column(db.String(20), unique=True)
+    country = db.Column(db.Integer, db.ForeignKey(Country.id), nullable=True)
+
+
 class Settlement(db.Model):
     __tablename__ = 'settlement'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     yandex_code = db.Column(db.String(20), unique=True)
-    country = db.Column(db.Integer, db.ForeignKey(Country.id), nullable=True)
+    region = db.Column(db.Integer, db.ForeignKey(Region.id), nullable=True)
 
 
 class Station(db.Model):

@@ -53,3 +53,10 @@ def find_else_create_user(msg: Message) -> User:
 def update(entry: db.Model, arg: str, value: Any) -> None:
     setattr(entry, arg, value)
     db.session.commit()
+
+
+def add_entry(obj: db.Model) -> None:
+    try:
+        db.session.add(obj)
+    except IntegrityError as err:
+        raise DBError(f'There was a problem writing to the DB.\n{err}')
