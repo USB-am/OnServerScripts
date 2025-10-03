@@ -152,18 +152,37 @@ def change_user_from_station(msg: tg_bot.Message) -> None:
                          message='Поле не может быть пустым',
                          reply_markup={})
     user = find_else_create_user(msg)
-    station = find_station(msg.text)
-    print(station)
-    old_from_station = user.from_station
-    if old_from_station is None:
-        msg_text = f'Установлена новая станция отправления "*{msg.text}*"'
-    else:
-        msg_text = f'Станция отправления изменена с "*{old_from_station.title}*" на "*{msg.text}*"'
-    # update(entry=user, arg='from_station', value=msg.text)
+    stations = find_station(msg.text)
+    # old_from_station = user.from_station
+    inline_buttons = bot.create_inline_keyboard([
+        [{'text': station.title, 'callback_data': 'select_station'},]
+        for station in stations
+    ])
     bot.send_message(chat_id=msg.user.id,
-                     message=msg_text,
-                     reply_markup={},
-                     parse_mode='Markdown')
+                     message='Найдены следующие станции:',
+                     reply_markup=inline_buttons)
+    # bot.wait_user_message(chat_id=msg.user.id,
+    #                       message='Для отмены введи "Отмена"',
+    #                       callback=change_selected_station)
+    # if old_from_station is None:
+    #     msg_text = f'Установлена новая станция отправления "*{station.text}*"'
+    # else:
+    #     msg_text = f'Станция отправления изменена с "*{old_from_station.title}*" на "*{station.text}*"'
+    # update(entry=user, arg='from_station', value=station.id)
+    # bot.send_message(chat_id=msg.user.id,
+    #                  message=msg_text,
+    #                  reply_markup={},
+    #                  parse_mode='Markdown')
+
+
+@bot.callback(name='select_station')
+def change_selected_station(callback_query) -> None:
+    ''' Изменить станцию на выбранную пользователем '''
+    # print(f'change_selected_station(msg={msg})')
+    x = callback_query.data
+    print('DATA:', dir(x), x, type(x), sep='\n', end='\n'*3)
+    x = callback_query.user
+    print('USER:', dir(x), x, type(x), sep='\n')
 
 
 @bot.command(name='test')
