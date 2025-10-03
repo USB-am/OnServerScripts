@@ -1,8 +1,8 @@
-from typing import Any
+from typing import Any, List
 
 from sqlalchemy.exc import IntegrityError
 
-from .models import db, User
+from .models import *
 from .exceptions import DBError
 from src.tg_bot import Message
 
@@ -60,3 +60,18 @@ def add_entry(obj: db.Model) -> None:
         db.session.add(obj)
     except IntegrityError as err:
         raise DBError(f'There was a problem writing to the DB.\n{err}')
+
+
+def save_entries() -> None:
+    try:
+        db.session.commit()
+    except IntegrityError as err:
+        raise DBError(f'There was a problem writing to the DB.\n{err}')
+
+
+def find_station(station_title: str) -> List[Station]:
+    ''' Найти станцию '''
+    like_text = f'%{station_title}%'
+    return db.session.query(Station) \
+        .filter(Station.title.like(like_text)) \
+        .all()

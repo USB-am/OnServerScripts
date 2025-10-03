@@ -3,7 +3,7 @@ from typing import Iterable
 
 import requests
 
-from src.database import add_entry
+from src.database import add_entry, save_entries
 from src.database.models import Country, Region, Settlement, Station
 
 
@@ -20,7 +20,7 @@ def get_stations() -> Iterable:
                        headers=headers)
     response = req.json()
 
-    for country in response:
+    for country in response.get('countries'):
         country_title = country.get('title')
         country_code = country.get('codes', {}).get('yandex_code')
         country_entry = Country(title=country_title,
@@ -54,3 +54,4 @@ def get_stations() -> Iterable:
                                             transport=station_transport,
                                             settlement=settlement_entry.id)
                     add_entry(station_entry)
+    save_entries()
