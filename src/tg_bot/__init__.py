@@ -140,6 +140,7 @@ class TelegramAPI:
         self._bot_callbacks: Dict[str, Callable] = {}
         self._waiting_users: Dict[int, Callable] = {}
         self._text_callback: Callable = lambda msg: None
+        self._callback_query_callback: Callable = lambda query: None
 
     @add_debug_log
     def send_message(self, chat_id: int, message: str,
@@ -236,8 +237,11 @@ class TelegramAPI:
                     else:
                         self._text_callback(message)
                 elif 'callback_query' in update:
-                    callback = self._get_callback(update)
-                    self._bot_callbacks[callback.data](callback)
+                    try:
+                        callback = self._get_callback(update)
+                        self._bot_callbacks[callback.data](callback)
+                    except KeyError:
+                        self._callback_query_callback(callback)
                 self.update_id = update['update_id'] + 1
 
             schedule.run_pending()
@@ -326,6 +330,11 @@ class TelegramAPI:
     def text(self) -> None:
         def decorator(func):
             self._text_callback = func
+        return decorator
+    
+    def callback_query(self) -> None:
+        def decorator(func):
+            self._callback_query_callback = func
         return decorator
 
     def _delete_from_waiting(self, message: Message, callback: Callable) -> None:
