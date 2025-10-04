@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import sys
 import enum
 from typing import List
@@ -151,38 +152,37 @@ def change_user_from_station(msg: tg_bot.Message) -> None:
         bot.send_message(chat_id=msg.user.id,
                          message='Поле не может быть пустым',
                          reply_markup={})
-    user = find_else_create_user(msg)
     stations = find_station(msg.text)
-    # old_from_station = user.from_station
     inline_buttons = bot.create_inline_keyboard([
-        [{'text': station.title, 'callback_data': 'select_station'},]
+        [{'text': station.title, 'callback_data': station.yandex_code},]
         for station in stations
     ])
     bot.send_message(chat_id=msg.user.id,
                      message='Найдены следующие станции:',
                      reply_markup=inline_buttons)
-    # bot.wait_user_message(chat_id=msg.user.id,
-    #                       message='Для отмены введи "Отмена"',
-    #                       callback=change_selected_station)
-    # if old_from_station is None:
-    #     msg_text = f'Установлена новая станция отправления "*{station.text}*"'
-    # else:
-    #     msg_text = f'Станция отправления изменена с "*{old_from_station.title}*" на "*{station.text}*"'
-    # update(entry=user, arg='from_station', value=station.id)
-    # bot.send_message(chat_id=msg.user.id,
-    #                  message=msg_text,
-    #                  reply_markup={},
-    #                  parse_mode='Markdown')
 
 
-@bot.callback(name='select_station')
-def change_selected_station(callback_query) -> None:
+@bot.callback_query()
+def callback_query(query: 'CallbackQuery') -> None:
+    ''' Обработчик неизвестных CallbackQuery '''
+    if re.search(r's\d{7}', query.data):
+        change_selected_station(query)
+
+
+def change_selected_station(query) -> None:
     ''' Изменить станцию на выбранную пользователем '''
-    # print(f'change_selected_station(msg={msg})')
-    x = callback_query.data
-    print('DATA:', dir(x), x, type(x), sep='\n', end='\n'*3)
-    x = callback_query.user
-    print('USER:', dir(x), x, type(x), sep='\n')
+    user = find_else_create_user(query)
+    old_user_station = find_station(station_yandex_code=user.from_station)
+    station = find_station(station_yandex_code=query.data)
+    update(entry=user, arg='from_station', value=station.yandex_code)
+    if old_user_station is None:
+        msg_text = f'Станция отправления установлена на "[{old_user_station.yandex_code}] ' + \
+            f'{old_user_station.title}"'
+    else:
+        msg_text = f'Станция изменена с "[{old_user_station.yandex_code}] {old_user_station.title}" на ' + \
+            f'"[{station.yandex_code}] {station.title}"'
+    # msg_text = f'Станция изменена на "[{station.yandex_code}] {station.title}"'
+    bot.send_message(query.user.id, msg_text, reply_markup={})
 
 
 @bot.command(name='test')

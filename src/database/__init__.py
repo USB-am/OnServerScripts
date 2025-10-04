@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Union
 
 from sqlalchemy.exc import IntegrityError
 
@@ -69,9 +69,14 @@ def save_entries() -> None:
         raise DBError(f'There was a problem writing to the DB.\n{err}')
 
 
-def find_station(station_title: str) -> List[Station]:
+def find_station(station_title: str=None, station_yandex_code: str=None) -> Union[List[Station], Station]:
     ''' Найти станцию '''
-    like_text = f'%{station_title}%'
-    return db.session.query(Station) \
-        .filter(Station.title.like(like_text)) \
-        .all()
+    if station_title is not None:
+        like_text = f'%{station_title}%'
+        return db.session.query(Station) \
+            .filter(Station.title.like(like_text)) \
+            .all()
+    elif station_yandex_code is not None:
+        return db.session.query(Station) \
+            .filter_by(yandex_code=station_yandex_code) \
+            .first()
