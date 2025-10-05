@@ -110,6 +110,13 @@ def text_handler(msg: tg_bot.Message) -> None:
                               message=msg_text,
                               callback=change_user_from_station)
         return
+    elif text == TextBtnSettings.change_to_station.value.lower():
+        msg_text = 'Введи название станции прибытия'
+        reply_markup = {}
+        bot.wait_user_message(chat_id=msg.user.id,
+                              message=msg_text,
+                              callback=change_user_to_station)
+        return
     elif text == TextBtnSettings.back_to_menu.value.lower():
         msg_text = 'Меню'
         reply_markup = ReplyStartButtons().reply_markup()
@@ -154,7 +161,27 @@ def change_user_from_station(msg: tg_bot.Message) -> None:
                          reply_markup={})
     stations = find_station(msg.text)
     inline_buttons = bot.create_inline_keyboard([
-        [{'text': station.title, 'callback_data': station.yandex_code},]
+        [{'text': station.title, 'callback_data': f'from_station {station.yandex_code}'},]
+        for station in stations
+    ])
+    bot.send_message(chat_id=msg.user.id,
+                     message='Найдены следующие станции:',
+                     reply_markup=inline_buttons)
+
+
+def change_user_to_station(msg: tg_bot.Message) -> None:
+    ''' Сменить станцию прибытия пользователя '''
+    if msg.text.lower() == 'отмена':
+        bot.send_message(chat_id=msg.user.id,
+                         message='Отмена смены станции прибытия',
+                         reply_markup=ReplySettingsButtons().reply_markup())
+    elif not msg.text:
+        bot.send_message(chat_id=msg.user.id,
+                         message='Поле не может быть пустым',
+                         reply_markup={})
+    stations = find_station(msg.text)
+    inline_buttons = bot.create_inline_keyboard([
+        [{'text': station.title, 'callback_data': f'to_station {station.yandex_code}'}]
         for station in stations
     ])
     bot.send_message(chat_id=msg.user.id,
@@ -165,23 +192,32 @@ def change_user_from_station(msg: tg_bot.Message) -> None:
 @bot.callback_query()
 def callback_query(query: 'CallbackQuery') -> None:
     ''' Обработчик неизвестных CallbackQuery '''
-    if re.search(r's\d{7}', query.data):
-        change_selected_station(query)
+    if re.search(r'from_station s\d{7}', query.data):
+        change_selected_station(query, 'from_station')
+    elif re.search(r'to_station s\d{7}', query.data):
+        change_selected_station(query, 'to_station')
 
 
-def change_selected_station(query) -> None:
+def change_selected_station(query, station_arg: str='from_station') -> None:
     ''' Изменить станцию на выбранную пользователем '''
     user = find_else_create_user(query)
-    old_user_station = find_station(station_yandex_code=user.from_station)
-    station = find_station(station_yandex_code=query.data)
-    update(entry=user, arg='from_station', value=station.yandex_code)
+    old_user_station = find_station(station_yandex_code=getattr(user, station_arg))
+    yandex_code = re.findall(r's\d{7}', query.data)[0]
+    station = find_station(station_yandex_code=yandex_code)
+    update(entry=user, arg=station_arg, value=station.yandex_code)
+
+    if station_arg == 'from_station':
+        station_type = 'отправления'
+    elif station_arg = 'to_station':
+        station_type = 'прибытия'
+
     if old_user_station is None:
-        msg_text = f'Станция отправления установлена на "[{old_user_station.yandex_code}] ' + \
-            f'{old_user_station.title}"'
+        msg_text = f'Станция {station_type} установлена на ' + \
+                   f'"[{station.yandex_code}] {station.title}"'
     else:
-        msg_text = f'Станция изменена с "[{old_user_station.yandex_code}] {old_user_station.title}" на ' + \
-            f'"[{station.yandex_code}] {station.title}"'
-    # msg_text = f'Станция изменена на "[{station.yandex_code}] {station.title}"'
+        msg_text = f'Станция {station_type} изменена с "[{old_user_station.yandex_code}] ' + \
+                   f'{old_user_station.title}" на "[{station.yandex_code}] {station.title}"'
+
     bot.send_message(query.user.id, msg_text, reply_markup={})
 
 
