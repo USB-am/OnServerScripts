@@ -69,20 +69,6 @@ def start_command(msg: tg_bot.Message) -> None:
                      reply_markup=reply_markup)
 
 
-# @bot.text()
-# def text_handler(msg: tg_bot.Message) -> None:
-#     text = msg.text.lower()
-#     if text == RTU.TextBtn.weather.value.lower():
-#         response = RTU.weather_response
-#     elif text == RTU.TextBtn.settings.value.lower():
-#         response = RTU.move_to_settings
-#     elif text == RTU.TextBtnSettings.change_city.value.lower():
-#         response = RTU.change_user_city
-#     elif text == RTU.TextBtnSettings.back_to_menu.value.lower():
-#         response = RTU.move_to_menu
-#     response(msg)
-
-
 @bot.text()
 def text_handler(msg: tg_bot.Message) -> None:
     text = msg.text.lower()
@@ -92,6 +78,12 @@ def text_handler(msg: tg_bot.Message) -> None:
         locality = find_locality(user.city)
         weather = get_weather(locality)
         msg_text = weather
+        reply_markup = {}
+      elif text == TextBtn.routes.value.lower():
+        from_station = user.from_station
+        to_station = user.to_station
+        route = get_route(from_station, to_station)
+        msg_text = get_route_text(route)
         reply_markup = {}
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
@@ -128,6 +120,20 @@ def text_handler(msg: tg_bot.Message) -> None:
                      message=msg_text,
                      reply_markup=reply_markup,
                      parse_mode='Markdown')
+
+
+def get_route(station_1: 'str', station_2: str) -> List[str]:
+    '''
+    Получить расписание транспорта между Станциями.
+
+    :param station_1: - yandex_code станции отправления;
+    :param station_2: - yandex_code станции прибытия.
+    :returns: Список строк с данными о времени отправления и прибытия.
+    '''
+
+
+def get_route_text(routes: List[str]):
+    pass
 
 
 def change_user_city(msg: tg_bot.Message) -> None:
@@ -208,7 +214,7 @@ def change_selected_station(query, station_arg: str='from_station') -> None:
 
     if station_arg == 'from_station':
         station_type = 'отправления'
-    elif station_arg = 'to_station':
+    elif station_arg == 'to_station':
         station_type = 'прибытия'
 
     if old_user_station is None:
