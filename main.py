@@ -79,7 +79,7 @@ def text_handler(msg: tg_bot.Message) -> None:
         weather = get_weather(locality)
         msg_text = weather
         reply_markup = {}
-      elif text == TextBtn.routes.value.lower():
+    elif text == TextBtn.routes.value.lower():
         from_station = user.from_station
         to_station = user.to_station
         route = get_route(from_station, to_station)
@@ -122,7 +122,7 @@ def text_handler(msg: tg_bot.Message) -> None:
                      parse_mode='Markdown')
 
 
-def get_route(station_1: 'str', station_2: str) -> List[str]:
+def get_route(station_1: str, station_2: str) -> List[str]:
     '''
     Получить расписание транспорта между Станциями.
 
@@ -130,6 +130,10 @@ def get_route(station_1: 'str', station_2: str) -> List[str]:
     :param station_2: - yandex_code станции прибытия.
     :returns: Список строк с данными о времени отправления и прибытия.
     '''
+    rasp_api = YandexRaspAPI()
+    routes = rasp_api.get_routes(station_1, station_2)
+    print(routes)
+    return routes
 
 
 def get_route_text(routes: List[str]):
