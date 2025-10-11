@@ -131,6 +131,7 @@ def get_route(station_1: str, station_2: str) -> List[str]:
     :returns: Список строк с данными о времени отправления и прибытия.
     '''
     rasp_api = YandexRaspAPI()
+    print('station_1', station_1, 'station_2', station_2, sep='\n', end='\n'*3)
     routes = rasp_api.get_routes(station_1, station_2)
     print(routes)
     return routes
