@@ -1,5 +1,6 @@
 import os
 from typing import List
+from datetime import datetime
 from dataclasses import dataclass
 
 import requests
@@ -39,9 +40,12 @@ class YandexRaspAPI:
 
         :returns: Список Route объектов с информацией о рейсах на дату dt.
         '''
+        if dt is None:
+            dt = datetime.now().strftime('%Y-%m-%d')
+        request = self.url.format(apikey=self.token,
+                                  from_=from_code,
+                                  to=to_code,
+                                  date=dt
+        ).replace('\n', '').replace(' ', '')
 
-        return requests.get(self.url.format(apikey=self.token,
-                                            from_=from_code,
-                                            to=to_code,
-                                            date=dt)
-                            ).json()
+        return requests.get(request).json()
