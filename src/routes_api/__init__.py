@@ -5,16 +5,29 @@ from dataclasses import dataclass
 
 import requests
 
-from .update_stations import get_stations, Station
+from src.database import find_station
+from src.database.models import Station
+# from .update_stations import get_stations
+
+
+TRANSPORT_EMOJI = {
+    'train': '🚃',
+}
 
 
 @dataclass
 class Route:
     from_station: Station
     to_station: Station
+    start_dt: datetime
+    finish_dt: datetime
+    transport_type: str
 
     def __str__(self):
-        return f'{self.from_station} → {self.to_station}'
+        start_dt_str = self.start_dt.strftime('%d.%m.%Y %H:%M:%S')
+        finish_dt_str = self.finish_dt.strftime('%d.%m.%Y %H:%M:%S')
+        transport_emoji = TRANSPORT_EMOJI.get(self.transport_type, '')
+        return f'{transport_emoji} {start_dt_str} - {finish_dt_str}'
 
 
 class YandexRaspAPI:
@@ -41,9 +54,10 @@ class YandexRaspAPI:
         :returns: Список Route объектов с информацией о рейсах на дату dt.
         '''
         response = self._send_search_request(from_code, to_code, dt)
-        x = response.keys()
-        print(x)
-    
+        schedule_json = response.json()
+        from_station = find_station(from_code)
+        to_station = find_station(to_code)
+ 
     def _send_search_request(self, from_code: str, to_code: str, dt: str=None) -> Dict:
         '''
         Получить расписание из точки from_code до to_code.
@@ -63,4 +77,4 @@ class YandexRaspAPI:
                                   to=to_code,
                                   date=dt)
 
-        return requests.get(request).json()
+        return requests.get(request)
