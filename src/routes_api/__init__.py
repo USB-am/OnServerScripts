@@ -1,4 +1,5 @@
 import os
+import json
 from typing import List, Dict
 from datetime import datetime
 from dataclasses import dataclass
@@ -7,7 +8,6 @@ import requests
 
 from src.database import find_station
 from src.database.models import Station
-# from .update_stations import get_stations
 
 
 TRANSPORT_EMOJI = {
@@ -53,10 +53,28 @@ class YandexRaspAPI:
 
         :returns: Список Route объектов с информацией о рейсах на дату dt.
         '''
+        format_string = "%Y-%m-%dT%H:%M:%S%z"
+        routes: List[Route] = []
+
         response = self._send_search_request(from_code, to_code, dt)
         schedule_json = response.json()
         from_station = find_station(from_code)
         to_station = find_station(to_code)
+
+        for segment in schedule_json.get('segments', []):
+            stops = segment.get('stops', '')
+            departure = datetime.strptime(segment.get('departure'), format_string)
+            arrival = datetime.strptime(segment.get('arrival'), format_string)
+            transport_type = segment.get('from', {}).get('transport_type', '')
+            routes.append(Route(from_station=from_station,
+                                to_station=to_station,
+                                start_dt=departure,
+                                finish_dt=arrival,
+                                transport_type=transport_type))
+
+        # file = open('schedule_json.json', 'w')
+        # json.dump(schedule_json, file, indent=2)
+        # file.close()
  
     def _send_search_request(self, from_code: str, to_code: str, dt: str=None) -> Dict:
         '''
