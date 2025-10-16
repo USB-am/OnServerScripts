@@ -12,7 +12,7 @@ tg_bot.load_config('config.json')
 from src.weather_api import find_locality, get_weather
 from src.database import find_else_create_user, update, find_station
 from src.tg_bot.initializer import TelegramBot
-from src.routes_api import YandexRaspAPI
+from src.routes_api import YandexRaspAPI, Route, TRANSPORT_EMOJI
 from src.routes_api.update_stations import get_stations
 
 
@@ -82,8 +82,8 @@ def text_handler(msg: tg_bot.Message) -> None:
     elif text == TextBtn.routes.value.lower():
         from_station = user.from_station
         to_station = user.to_station
-        route = get_route(from_station, to_station)
-        msg_text = get_route_text(route)
+        routes = get_route(from_station, to_station)
+        msg_text = get_route_text(routes)
         reply_markup = {}
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
@@ -135,8 +135,27 @@ def get_route(station_1: str, station_2: str) -> List[str]:
     return routes
 
 
-def get_route_text(routes: List[str]):
-    pass
+def get_route_text(routes: List[Route]) -> str:
+    '''
+    Преобразовать список Маршрутов в читаемую строку с расписанием.
+
+    :param routes: - список Маршрутов.
+    :returns: строка с расписанием маршрутов.
+    '''
+    if not routes:
+        return 'Расписание между выбранными станциями отсутствует. ' + \
+               'Возможно выбраны неправильные станции, либо сегодня рейсов не будет.'
+
+    transport_emoji = TRANSPORT_EMOJI.get(routes[0].transport_type, '')
+    from_station = routes[0].from_station
+    from_station_text = f'{transport_emoji}{from_station.title}'
+    to_station = routes[0].to_station
+    to_station_text = f'{transport_emoji}{to_station.title}'
+
+    output = f'Расписание между "{from_station_text}" и "{to_station_text}":\n'
+    output = '\n'.join((output, *map(str, routes)))
+
+    return output
 
 
 def change_user_city(msg: tg_bot.Message) -> None:
