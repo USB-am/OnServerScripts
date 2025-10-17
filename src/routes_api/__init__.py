@@ -58,7 +58,9 @@ class YandexRaspAPI:
         format_string = "%Y-%m-%dT%H:%M:%S%z"
         routes: List[Route] = []
 
-        response = self._send_search_request(from_code, to_code, dt)
+        response = self._send_search_request(from_code=from_code,
+                                             to_code=to_code,
+                                             dt=dt.strftime(format_string))
         schedule_json = response.json()
         from_station = find_station(station_yandex_code=from_code)
         to_station = find_station(station_yandex_code=to_code)

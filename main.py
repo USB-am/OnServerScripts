@@ -14,6 +14,7 @@ from src.database import find_else_create_user, update, find_station
 from src.tg_bot.initializer import TelegramBot
 from src.routes_api import YandexRaspAPI, Route, TRANSPORT_EMOJI
 from src.routes_api.update_stations import get_stations
+from settings import TZ_UTC_3
 
 
 bot = TelegramBot()
@@ -82,8 +83,13 @@ def text_handler(msg: tg_bot.Message) -> None:
     elif text == TextBtn.routes.value.lower():
         from_station = user.from_station
         to_station = user.to_station
-        routes = get_route(from_station, to_station)
-        msg_text = get_route_text(routes)
+        if None in (from_station, to_station):
+            msg_text = f'Чтобы получить расписание надо выбрать станции отправления и прибытия!'
+        else:
+            now_dt = datetime.now(tz=TZ_UTC_3)
+            routes = get_route(from_station, to_station, now_dt)
+            filtered_routes = tuple(filter(lambda r: r.start_dt > now_dt, routes))
+            msg_text = get_route_text(filtered_routes)
         reply_markup = {}
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
@@ -122,7 +128,7 @@ def text_handler(msg: tg_bot.Message) -> None:
                      parse_mode='Markdown')
 
 
-def get_route(station_1: str, station_2: str) -> List[str]:
+def get_route(station_1: str, station_2: str, dt: datetime=None) -> List[str]:
     '''
     Получить расписание транспорта между Станциями.
 
@@ -130,8 +136,10 @@ def get_route(station_1: str, station_2: str) -> List[str]:
     :param station_2: - yandex_code станции прибытия.
     :returns: Список строк с данными о времени отправления и прибытия.
     '''
+    if dt is None:
+        dt = datetime.now(tz=TZ_UTC_3)
     rasp_api = YandexRaspAPI()
-    routes = rasp_api.get_routes(station_1, station_2)
+    routes = rasp_api.get_routes(station_1, station_2, dt)
     return routes
 
 
@@ -267,7 +275,7 @@ def route_command(msg: tg_bot.Message) -> None:
     rasp_api = YandexRaspAPI()
     from_code = user.from_station.yandex_code
     to_code = user.to_station.yandex_code
-    now_dt = datetime.now()
+    now_dt = datetime.now(tz=TZ_UTC_3)
     routes = rasp_api.get_routes(from_code=from_code,
                                  to_code=to_code,
                                  dt=now_dt.strftime('%Y-%m-%d'))
