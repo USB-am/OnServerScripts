@@ -29,7 +29,7 @@ class Route:
         difference = self.finish_dt - self.start_dt
         difference_str = ':'.join(str(difference).replace('days', 'д').split(':')[:-1])
 
-        return f'{start_dt_str} - {finish_dt_str} ({difference_str})'
+        return f'{start_dt_str} - {finish_dt_str} (⏳{difference_str})'
 
 
 class YandexRaspAPI:

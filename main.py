@@ -4,7 +4,7 @@ import re
 import sys
 import enum
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from src import tg_bot
 tg_bot.load_config('config.json')
@@ -30,6 +30,14 @@ class TextBtn(enum.Enum):
     settings = 'Настройки'
 
 
+class TextBtnTransport(enum.Enum):
+    from_to = 'Расписание туда'
+    to_from = 'Расписание обратно'
+    from_to_tomorrow = 'Расписание туда (завтра)'
+    to_from_tomorrow = 'Расписание обратно (завтра)'
+    back_to_menu = 'Назад'
+
+
 class TextBtnSettings(enum.Enum):
     change_city = 'Сменить город'
     change_from_station = 'Станция отправления'
@@ -49,6 +57,15 @@ class ReplyStartButtons(ReplyMarkupButtons):
     buttons = [
         [TextBtn.weather.value, TextBtn.routes.value,],
         [TextBtn.settings.value,]
+    ]
+
+
+class ReplyTransportButtons(ReplyMarkupButtons):
+    ''' Кнопки для транспорта '''
+    buttons = [
+        [TextBtnTransport.from_to.value, TextBtnTransport.to_from.value],
+        [TextBtnTransport.from_to_tomorrow.value, TextBtnTransport.to_from_tomorrow.value],
+        [TextBtnTransport.back_to_menu.value]
     ]
 
 
@@ -81,19 +98,33 @@ def text_handler(msg: tg_bot.Message) -> None:
         msg_text = weather
         reply_markup = {}
     elif text == TextBtn.routes.value.lower():
-        from_station = user.from_station
-        to_station = user.to_station
-        if None in (from_station, to_station):
-            msg_text = f'Чтобы получить расписание надо выбрать станции отправления и прибытия!'
-        else:
-            now_dt = datetime.now(tz=TZ_UTC_3)
-            routes = get_route(from_station, to_station, now_dt)
-            filtered_routes = tuple(filter(lambda r: r.start_dt > now_dt, routes))
-            msg_text = get_route_text(filtered_routes)
-        reply_markup = {}
+        msg_text = 'Транспорт'
+        reply_markup = ReplyTransportButtons().reply_markup()
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
         reply_markup = ReplySettingsButtons().reply_markup()
+    elif text == TextBtnTransport.from_to.value.lower():
+        msg_text = get_schedule(from_station=user.from_station,
+                                to_station=user.to_station,
+                                dt=datetime.now(tz=TZ_UTC_3))
+        reply_markup = {}
+    elif text == TextBtnTransport.to_from.value.lower():
+        msg_text = get_schedule(from_station=user.to_station,
+                                to_station=user.from_station,
+                                dt=datetime.now(tz=TZ_UTC_3))
+        reply_markup = {}
+    elif text == TextBtnTransport.from_to_tomorrow.value.lower():
+        msg_text = get_schedule(from_station=user.from_station,
+                                to_station=user.to_station,
+                                dt=datetime.now(tz=TZ_UTC_3)+timedelta(days=1),
+                                filtered=False)
+        reply_markup = {}
+    elif text == TextBtnTransport.to_from_tomorrow.value.lower():
+        msg_text = get_schedule(from_station=user.to_station,
+                                to_station=user.from_station,
+                                dt=datetime.now(tz=TZ_UTC_3)+timedelta(days=1),
+                                filtered=False)
+        reply_markup = {}
     elif text == TextBtnSettings.change_city.value.lower():
         msg_text = 'Введи название города:'
         reply_markup = {}
@@ -126,6 +157,27 @@ def text_handler(msg: tg_bot.Message) -> None:
                      message=msg_text,
                      reply_markup=reply_markup,
                      parse_mode='Markdown')
+
+
+def get_schedule(from_station: str, to_station: str, dt: datetime, filtered: bool=True) -> str:
+    '''
+    Получить расписание между станциями from_station и to_station на дату dt.
+
+    :param from_station: - yandex код станции отправления;
+    :param to_station: - yandex код станции прибытия;
+    :param dt: - дата на которую необходимо получить расписание;
+    :param filtered: - True, если необходимо убрать ушедший транспорт.
+    :returns: строка с расписанием.
+    '''
+    if None in (from_station, to_station):
+        msg_text = f'Чтобы получить расписание надо выбрать станции отправления и прибытия!'
+    else:
+        now_dt = datetime.now(tz=TZ_UTC_3)
+        routes = get_route(from_station, to_station, now_dt)
+        if filtered:
+            routes = tuple(filter(lambda r: r.start_dt > now_dt, routes))
+        msg_text = get_route_text(routes)
+    return msg_text
 
 
 def get_route(station_1: str, station_2: str, dt: datetime=None) -> List[str]:
