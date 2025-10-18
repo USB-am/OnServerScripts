@@ -6,6 +6,8 @@ from dataclasses import dataclass
 import requests
 from geopy.geocoders import Nominatim
 
+from settings import TZ_UTC_3
+
 
 WEATHER_URL = 'https://api.gismeteo.net/v3/weather/forecast/h1/?latitude={lat}&longitude={lon}'
 
@@ -97,7 +99,7 @@ def get_weather(locality: Locality, day: date=None) -> str:
     :param locality: локация, погода которой будет возвращена
     '''
     if day is None:
-        day = datetime.now().date()
+        day = datetime.now(tz=TZ_UTC_3).date()
     lat, lon = get_coords(locality)
     url = 'https://api.gismeteo.net/v3/weather/forecast/h1/?latitude={lat}&longitude={lon}'
     weather_json = send_request(url.format(lat=lat, lon=lon)).json()

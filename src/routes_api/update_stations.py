@@ -7,7 +7,7 @@ from src.database import add_entry, save_entries
 from src.database.models import Country, Region, Settlement, Station
 
 
-def get_stations() -> Iterable:
+def update_stations() -> Iterable:
     url = 'https://api.rasp.yandex.net/v3.0/stations_list/?apikey={token}&lang=ru_RU&format=json'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.5.715 Yowser/2.5 Safari/537.36',

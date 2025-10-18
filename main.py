@@ -13,7 +13,7 @@ from src.weather_api import find_locality, get_weather
 from src.database import find_else_create_user, update, find_station
 from src.tg_bot.initializer import TelegramBot
 from src.routes_api import YandexRaspAPI, Route, TRANSPORT_EMOJI
-from src.routes_api.update_stations import get_stations
+from src.routes_api.update_stations import update_stations
 from settings import TZ_UTC_3
 
 
@@ -28,6 +28,12 @@ class TextBtn(enum.Enum):
     weather = 'Погода'
     routes = 'Транспорт'
     settings = 'Настройки'
+
+
+class TextBtnWeather(enum.Enum):
+    weather_today = 'Погода на сегодня'
+    weather_tomorrow = 'Погода на завтра'
+    back_to_menu = 'Назад'
 
 
 class TextBtnTransport(enum.Enum):
@@ -57,6 +63,15 @@ class ReplyStartButtons(ReplyMarkupButtons):
     buttons = [
         [TextBtn.weather.value, TextBtn.routes.value,],
         [TextBtn.settings.value,]
+    ]
+
+
+class ReplyWeatherButtons(ReplyMarkupButtons):
+    ''' Кнопки для погоды '''
+    buttons = [
+        [TextBtnWeather.weather_today.value],
+        [TextBtnWeather.weather_tomorrow.value],
+        [TextBtnWeather.back_to_menu.value]
     ]
 
 
@@ -93,16 +108,25 @@ def text_handler(msg: tg_bot.Message) -> None:
     user = find_else_create_user(msg)
 
     if text == TextBtn.weather.value.lower():
-        locality = find_locality(user.city)
-        weather = get_weather(locality)
-        msg_text = weather
-        reply_markup = {}
+        msg_text = 'Погода'
+        reply_markup = ReplyWeatherButtons().reply_markup()
     elif text == TextBtn.routes.value.lower():
         msg_text = 'Транспорт'
         reply_markup = ReplyTransportButtons().reply_markup()
     elif text == TextBtn.settings.value.lower():
         msg_text = 'Настройки'
         reply_markup = ReplySettingsButtons().reply_markup()
+    elif text == TextBtnWeather.weather_today.value.lower():
+        locality = find_locality(user.city)
+        weather = get_weather(locality)
+        msg_text = weather
+        reply_markup = {}
+    elif text == TextBtnWeather.weather_tomorrow.value.lower():
+        locality = find_locality(user.city)
+        tomorrow_date = (datetime.now(tz=TZ_UTC_3) + timedelta(days=1)).date()
+        weather = get_weather(locality, tomorrow_date)
+        msg_text = weather
+        reply_markup = {}
     elif text == TextBtnTransport.from_to.value.lower():
         msg_text = get_schedule(from_station=user.from_station,
                                 to_station=user.to_station,
@@ -172,11 +196,12 @@ def get_schedule(from_station: str, to_station: str, dt: datetime, filtered: boo
     if None in (from_station, to_station):
         msg_text = f'Чтобы получить расписание надо выбрать станции отправления и прибытия!'
     else:
-        now_dt = datetime.now(tz=TZ_UTC_3)
-        routes = get_route(from_station, to_station, now_dt)
+        routes = get_route(from_station, to_station, dt)
         if filtered:
-            routes = tuple(filter(lambda r: r.start_dt > now_dt, routes))
-        msg_text = get_route_text(routes)
+            routes = tuple(filter(lambda r: r.start_dt > dt, routes))
+        prev_msg_text, next_msg_text = get_route_text(routes).split(':', maxsplit=1)
+        dt_str = dt.strftime("%d.%m.%Y")
+        msg_text = prev_msg_text + f' на {dt_str}:' + next_msg_text
     return msg_text
 
 
@@ -292,13 +317,9 @@ def change_selected_station(query, station_arg: str='from_station') -> None:
     old_user_station = find_station(station_yandex_code=getattr(user, station_arg))
     yandex_code = re.findall(r's\d{7}', query.data)[0]
     station = find_station(station_yandex_code=yandex_code)
+    station_type = 'отправления' if station_arg=='from_station' else 'прибытия'
+
     update(entry=user, arg=station_arg, value=station.yandex_code)
-
-    if station_arg == 'from_station':
-        station_type = 'отправления'
-    elif station_arg == 'to_station':
-        station_type = 'прибытия'
-
     if old_user_station is None:
         msg_text = f'Станция {station_type} установлена на ' + \
                    f'"[{station.yandex_code}] {station.title}"'
@@ -309,34 +330,12 @@ def change_selected_station(query, station_arg: str='from_station') -> None:
     bot.send_message(query.user.id, msg_text, reply_markup={})
 
 
-@bot.command(name='test')
-def test_command(msg: tg_bot.Message) -> None:
-    locality = find_locality('Ростов-на-Дону')
-    weather = get_weather(locality)
-    bot.send_message(msg.user.id, weather, reply_markup={})
-
-
-@bot.command(name='route')
-def route_command(msg: tg_bot.Message) -> None:
-    user = find_else_create_user(msg)
-    if None in (user.from_station, user.to_station):
-        bot.send_message(chat_id=msg.user.id,
-                         message='Не выбраны станции для построения маршрута!',
-                         reply_markup={})
-        return
-    rasp_api = YandexRaspAPI()
-    from_code = user.from_station.yandex_code
-    to_code = user.to_station.yandex_code
-    now_dt = datetime.now(tz=TZ_UTC_3)
-    routes = rasp_api.get_routes(from_code=from_code,
-                                 to_code=to_code,
-                                 dt=now_dt.strftime('%Y-%m-%d'))
-    print(routes)
-
-
-# @bot.command(name='stations')
-# def stations_command(msg: tg_bot.Message) -> None:
-#     get_stations()
+@bot.command(name='update_stations')
+def stations_command(msg: tg_bot.Message) -> None:
+    update_stations()
+    bot.send_message(chat_id=msg.user.id,
+                     message='Станции обновлены',
+                     reply_markup={})
 
 
 @bot.command(name='exit')
