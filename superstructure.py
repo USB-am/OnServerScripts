@@ -23,7 +23,9 @@ class Schedule:
         '''
 
 
+class SSTelegramAPI(tg_bot.TelegramAPI):
+    ''' Надстройка над основным классом бота '''
+
+
 if __name__ == '__main__':
-    schedule_obj = Schedule()
-    # schedule_obj.add_event(name='send_weather', callback='bot.send_weather')
-    # bot.listen()
+    tg_api = SSTelegramAPI()
