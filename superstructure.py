@@ -27,5 +27,13 @@ class SSTelegramAPI(tg_bot.TelegramAPI):
     ''' Надстройка над основным классом бота '''
 
 
+class Application(SSTelegramAPI, Schedule):
+	''' Главная надстройка '''
+
+	def __init__(self):
+		super(self, SSTelegramAPI).__init__()
+		super(self, Schedule).__init__()
+
+
 if __name__ == '__main__':
-    tg_api = SSTelegramAPI()
+    app = Application()
