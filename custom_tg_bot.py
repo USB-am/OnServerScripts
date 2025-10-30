@@ -17,7 +17,7 @@ from src.routes_api.update_stations import update_stations
 from settings import TZ_UTC_3
 
 
-# bot = TelegramBot()
+bot = TelegramBot()
 # bot.listen()
 
 
@@ -338,6 +338,6 @@ def stations_command(msg: tg_bot.Message) -> None:
                      reply_markup={})
 
 
-# @bot.command(name='exit')
-# def exit_command(msg: tg_bot.Message) -> None:
-#     sys.exit()
+@bot.command(name='exit')
+def exit_command(msg: tg_bot.Message) -> None:
+    sys.exit()

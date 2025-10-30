@@ -5,10 +5,12 @@ import threading
 from typing import Dict, Callable
 
 from src import tg_bot
+from src.tg_bot.initializer import TelegramBot
+
+
 tg_bot.load_config('config.json')
-
-
-bot = tg_bot.TelegramAPI()
+bot = TelegramBot()
+import custom_tg_bot as CustomBot
 
 
 class Schedule:
