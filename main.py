@@ -2,13 +2,13 @@
 
 import sys
 import enum
-import threading
-from typing import Dict, Callable
+from typing import Callable
 
 import schedule
 
 from src import tg_bot
 from src.tg_bot.initializer import TelegramBot
+from src.database import get_all_users
 
 
 tg_bot.load_config('config.json')
@@ -105,6 +105,16 @@ class Schedule:
 
         self.add_repeat_at_job(callback, at_time, unit, tags, **kwargs)
         return schedule.CancelJob
+
+
+class Callbacks:
+    def send_message_all_users(self, message_text: str) -> Callable:
+        ''' Отправить сообщение всем пользователям '''
+        for user in get_all_users():
+            bot.send_message(chat_id=user.chat_id,
+                             message=message_text,
+                             reply_markup={},
+                             parse_mode='Markdown')
 
 
 jobs = Schedule()

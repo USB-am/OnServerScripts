@@ -50,6 +50,11 @@ def find_else_create_user(msg: Message) -> User:
     return user
 
 
+def get_all_users() -> List[User]:
+    ''' Получить всех пользователей '''
+    return User.query.all()
+
+
 def update(entry: db.Model, arg: str, value: Any) -> None:
     setattr(entry, arg, value)
     db.session.commit()
