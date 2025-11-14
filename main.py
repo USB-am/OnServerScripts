@@ -2,12 +2,13 @@
 
 import sys
 import enum
-from typing import Callable
+from typing import List, Callable
 
 import schedule
 
 from src import tg_bot
 from src.tg_bot.initializer import TelegramBot
+from src.database.models import User
 from src.database import get_all_users
 
 
@@ -108,16 +109,24 @@ class Schedule:
 
 
 class Callbacks:
-    def send_message_all_users(self, message_text: str) -> Callable:
-        ''' Отправить сообщение всем пользователям '''
-        for user in get_all_users():
+    def send_message(self, users: List[User], message_text: str) -> None:
+        ''' Отправить сообщение пользователям '''
+        for user in users:
             bot.send_message(chat_id=user.chat_id,
                              message=message_text,
                              reply_markup={},
                              parse_mode='Markdown')
 
+    def send_photo(self, users: List[User], photo_url: str, text: str) -> None:
+        ''' Отправить фото пользователям '''
+        for user in users:
+            bot.send_photo(chat_id=user.chat_id,
+                           url=photo_url,
+                           text=text)
+
 
 jobs = Schedule()
+callbacks = Callbacks()
 
 
 def bot_start() -> None:
